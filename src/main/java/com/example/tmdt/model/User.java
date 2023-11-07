@@ -19,6 +19,7 @@ public class User {
     private String gender ;
     private Integer age ;
     private String phone ;
+    private String email ;
     @ManyToOne
     private Address address ;
     @ManyToOne
