@@ -4,6 +4,7 @@ import com.example.tmdt.model.fkProduct.*;
 import com.example.tmdt.security.model.Account;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -30,7 +31,8 @@ public class Product {
     private Double promotion;
     @Column(columnDefinition = "integer default 0")
     private Integer count;
-    @Column(columnDefinition = "integer default 0")
+
+    @Column(nullable = true)
     private Integer status;
 
     @OneToMany(cascade = CascadeType.ALL)
