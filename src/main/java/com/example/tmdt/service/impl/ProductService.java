@@ -3,7 +3,6 @@ package com.example.tmdt.service.impl;
 import com.example.tmdt.dto.ProductDTO;
 import com.example.tmdt.mapper.ProductMapper;
 import com.example.tmdt.model.Product;
-import com.example.tmdt.model.address.Address;
 import com.example.tmdt.repository.ProductRepository;
 import com.example.tmdt.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
