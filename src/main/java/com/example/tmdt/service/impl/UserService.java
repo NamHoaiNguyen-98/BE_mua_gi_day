@@ -1,6 +1,6 @@
 package com.example.tmdt.service.impl;
-
 import com.example.tmdt.dto.UserDTO;
+import com.example.tmdt.mapper.UserMapper;
 import com.example.tmdt.model.User;
 import com.example.tmdt.repository.UserRepository;
 import com.example.tmdt.security.model.Account;
@@ -19,14 +19,15 @@ public class UserService implements IUserService {
    private UserRepository userRepository ;
     @Autowired
    private IAccountRepository accountRepository ;
-
+    @Autowired
+    private UserMapper userMapper;
 
 
     @Override
     public List<String> listNameEmail() {
         List<String> email = new ArrayList<>() ;
-        Iterable<User> userList = userRepository.findAll() ;
-        for (User user: userList
+        Iterable<Account> userList = accountRepository.findAll() ;
+        for (Account user: userList
              ) {
                 email.add(user.getEmail());
         }
@@ -46,7 +47,8 @@ public class UserService implements IUserService {
 
     @Override
     public void save(UserDTO dto) {
-
+        User user = userMapper.toEntity(dto);
+        userMapper.toDto(userRepository.save(user));
     }
 
     @Override
@@ -56,11 +58,16 @@ public class UserService implements IUserService {
 
     @Override
     public UserDTO findOne(Long id) {
-        return null;
+        Optional<User> optionalUser = userRepository.findById(id);
+        if(optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            return userMapper.toDto(user);
+        } return null;
     }
 
     @Override
     public List<UserDTO> findAll() {
-        return null;
+        List<User> users = userRepository.findAll();
+        return userMapper.toDto(users);
     }
 }

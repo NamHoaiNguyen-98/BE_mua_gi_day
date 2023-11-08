@@ -49,4 +49,5 @@ public class AccountServiceImpl implements UserDetailsService, IAccountService {
     public Account toDTO(Account user) {
         return new Account(user.getId(), user.getUsername(), user.getRoles().toString());
     }
+
 }
