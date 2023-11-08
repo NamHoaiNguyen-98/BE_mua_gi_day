@@ -25,6 +25,6 @@ public class ProductDTO {
     private Shop shop;
     private OptionProduct option;
     private Category category;
-    private List<Image> image;
+    private List<ImageDTO> image;
     private Account account;
 }
