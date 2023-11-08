@@ -1,11 +1,14 @@
 package com.example.tmdt.controller;
+import com.example.tmdt.dto.ImageDTO;
 import com.example.tmdt.dto.ProductDTO;
+import com.example.tmdt.service.IImageService;
 import com.example.tmdt.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -14,6 +17,8 @@ import java.util.Optional;
 public class ProductController {
     @Autowired
     private IProductService productService;
+    @Autowired
+    private IImageService imageService;
 
     @GetMapping
     ResponseEntity<Iterable<ProductDTO>> findAll() {
@@ -27,6 +32,10 @@ public class ProductController {
     }
     @PostMapping
     ResponseEntity<?> save(@RequestBody ProductDTO productDTO) {
+        List<ImageDTO> imageDTOS = productDTO.getImage();
+        for (ImageDTO imageDTO : imageDTOS) {
+            imageService.save(imageDTO);
+        }
         productService.save(productDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
