@@ -32,10 +32,6 @@ public class ProductController {
     }
     @PostMapping
     ResponseEntity<?> save(@RequestBody ProductDTO productDTO) {
-        List<ImageDTO> imageDTOS = productDTO.getImage();
-        for (ImageDTO imageDTO : imageDTOS) {
-            imageService.save(imageDTO);
-        }
         productService.save(productDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
