@@ -48,4 +48,10 @@ public class ProductService implements IProductService {
         List<Product> products = productRepository.findAll();
         return productMapper.toDto(products);
     }
+
+    @Override
+    public List<ProductDTO> findAllByAccount_Id(Long id) {
+        List<Product> products = productRepository.findAllByAccount_Id(id);
+        return productMapper.toDto(products);
+    }
 }

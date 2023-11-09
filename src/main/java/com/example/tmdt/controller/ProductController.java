@@ -1,6 +1,8 @@
 package com.example.tmdt.controller;
 import com.example.tmdt.dto.ImageDTO;
 import com.example.tmdt.dto.ProductDTO;
+import com.example.tmdt.model.Product;
+import com.example.tmdt.repository.ProductRepository;
 import com.example.tmdt.service.IImageService;
 import com.example.tmdt.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class ProductController {
     private IProductService productService;
     @Autowired
     private IImageService imageService;
+    @Autowired
+    private ProductRepository productRepository;
 
     @GetMapping
     ResponseEntity<Iterable<ProductDTO>> findAll() {
@@ -39,6 +43,11 @@ public class ProductController {
     public void delete(@PathVariable Long id) {
         productService.delete(id);
     }
+    @GetMapping("/acc/{id}")
+    ResponseEntity<List<ProductDTO>> findByIdAcc(@PathVariable Long id) {
+        return new ResponseEntity<>(productService.findAllByAccount_Id(id),HttpStatus.OK);
+    }
+
 
 
 }
