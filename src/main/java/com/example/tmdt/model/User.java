@@ -1,7 +1,8 @@
 package com.example.tmdt.model;
-import com.example.tmdt.model.address.Address;
+
 import javax.persistence.*;
 
+import com.example.tmdt.model.address.Wards;
 import com.example.tmdt.security.model.Account;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,8 +21,9 @@ public class User {
     private Integer age ;
     private String phone ;
     private String email ;
+    private String address;
     @ManyToOne
-    private Address address ;
+    private Wards wards;
     @ManyToOne
     private Discount discount ;
     @OneToOne

@@ -1,6 +1,6 @@
 package com.example.tmdt.dto;
 
-import com.example.tmdt.model.address.Address;
+
 import com.example.tmdt.security.model.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,5 +17,6 @@ public class ShopDTO {
     private String avatar;
     private String phone;
     private Account account ;
-    private Address address ;
+    private String address ;
+    private WardsDTO wardsDTO;
 }

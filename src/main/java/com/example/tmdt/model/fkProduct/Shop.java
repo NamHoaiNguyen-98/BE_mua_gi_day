@@ -1,5 +1,5 @@
 package com.example.tmdt.model.fkProduct;
-import com.example.tmdt.model.address.Address;
+import com.example.tmdt.model.address.Wards;
 import com.example.tmdt.security.model.Account;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +18,7 @@ public class Shop  {
     private String phone;
     @ManyToOne
     private Account account ;
+    private String address ;
     @ManyToOne
-    private Address address ;
+    private Wards wards;
 }
