@@ -4,7 +4,6 @@ import com.example.tmdt.dto.ProductDTO;
 import com.example.tmdt.model.Product;
 import com.example.tmdt.repository.ProductRepository;
 import com.example.tmdt.service.IImageService;
-import com.example.tmdt.repository.ProductRepository;
 import com.example.tmdt.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +32,10 @@ public class ProductController {
     ResponseEntity<Iterable<ProductDTO>> findAllStatus() {
         return new ResponseEntity<>(productService.findAllStatus(), HttpStatus.OK);
     }
+    @GetMapping("/search/{name}")
+    ResponseEntity<Iterable<ProductDTO>> searchByName(@PathVariable String name) {
+        return new ResponseEntity<>(productService.searchByName(name), HttpStatus.OK);
+    }
 
 
     @GetMapping("/{id}")
@@ -49,11 +52,6 @@ public class ProductController {
     public void delete(@PathVariable Long id) {
         productService.delete(id);
     }
-    @GetMapping("/acc/{id}")
-    ResponseEntity<List<ProductDTO>> findByIdAcc(@PathVariable Long id) {
-        return new ResponseEntity<>(productService.findAllByAccount_Id(id),HttpStatus.OK);
-    }
-
 
 
 }

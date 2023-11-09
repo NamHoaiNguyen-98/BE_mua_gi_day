@@ -7,4 +7,6 @@ import java.util.List;
 public interface IProductService extends BaseService<ProductDTO>{
     List<ProductDTO> findAllByAccount_Id(Long id);
     List<ProductDTO> findAllStatus () ;
+
+    List<ProductDTO> searchByName (String name );
 }
