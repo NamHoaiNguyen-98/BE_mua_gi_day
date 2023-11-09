@@ -13,4 +13,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllByAccount_Id(Long id);
 
 
+    @Query(value = "SELECT * FROM product  " +
+            "WHERE product.status = 0 ",nativeQuery = true)
+    List<Product> findAllStatus();
 }
