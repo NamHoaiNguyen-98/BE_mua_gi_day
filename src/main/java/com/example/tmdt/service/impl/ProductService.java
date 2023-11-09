@@ -48,4 +48,9 @@ public class ProductService implements IProductService {
         List<Product> products = productRepository.findAll();
         return productMapper.toDto(products);
     }
+
+    @Override
+    public List<ProductDTO> findAllStatus() {
+        return productMapper.toDto(productRepository.findAllStatus());
+    }
 }

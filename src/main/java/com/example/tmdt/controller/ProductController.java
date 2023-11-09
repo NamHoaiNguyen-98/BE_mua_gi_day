@@ -1,5 +1,6 @@
 package com.example.tmdt.controller;
 import com.example.tmdt.dto.ProductDTO;
+import com.example.tmdt.repository.ProductRepository;
 import com.example.tmdt.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,11 @@ public class ProductController {
     ResponseEntity<Iterable<ProductDTO>> findAll() {
         return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
     }
+    @GetMapping("/status")
+    ResponseEntity<Iterable<ProductDTO>> findAllStatus() {
+        return new ResponseEntity<>(productService.findAllStatus(), HttpStatus.OK);
+    }
+
 
     @GetMapping("/{id}")
     ResponseEntity<ProductDTO> findOne(@PathVariable("id") Long id) {
