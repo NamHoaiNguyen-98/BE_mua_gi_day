@@ -36,6 +36,7 @@ public class ShopController {
     @GetMapping("/account/{id}")
     ResponseEntity<?> findShopByAccount(@PathVariable Long id){
        ShopDTO shopDTO = shopService.findShopByIdAccount(id);
+
         return new ResponseEntity<>(shopDTO, HttpStatus.OK);
     }
 }

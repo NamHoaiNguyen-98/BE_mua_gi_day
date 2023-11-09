@@ -18,5 +18,5 @@ public class ShopDTO {
     private String phone;
     private Account account ;
     private String address ;
-    private WardsDTO wardsDTO;
+    private WardsDTO wards;
 }

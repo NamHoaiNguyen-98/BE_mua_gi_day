@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class WardsDTO {
     private Long id;
     private String name;
+    private DistrictDTO district;
 }

@@ -2,6 +2,7 @@ package com.example.tmdt.service.impl;
 
 import com.example.tmdt.dto.WardsDTO;
 import com.example.tmdt.mapper.WardsMapper;
+import com.example.tmdt.model.Product;
 import com.example.tmdt.model.address.Wards;
 import com.example.tmdt.repository.WardsRepository;
 import com.example.tmdt.service.IWardsService;
@@ -17,6 +18,8 @@ public class WardsService implements IWardsService {
     private WardsRepository wardsRepository;
     @Override
     public void save(WardsDTO dto) {
+        Wards wards = wardsMapper.toEntity(dto);
+        wardsMapper.toDto(wardsRepository.save(wards));
     }
 
     @Override
