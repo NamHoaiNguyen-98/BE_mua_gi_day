@@ -25,7 +25,6 @@ public class ShopServiceService implements IShopService {
     @Override
     public void save(ShopDTO dto) {
         Shop shop = shopMapper.toEntity(dto);
-        shop.setWards(wardsRepository.findById(dto.getWards().getId()).get());
         shopMapper.toDto(shopRepository.save(shop));
     }
 
