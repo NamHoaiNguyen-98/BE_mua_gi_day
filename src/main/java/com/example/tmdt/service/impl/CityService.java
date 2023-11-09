@@ -3,6 +3,7 @@ package com.example.tmdt.service.impl;
 import com.example.tmdt.dto.CityDTO;
 import com.example.tmdt.mapper.CityMapper;
 import com.example.tmdt.model.address.City;
+import com.example.tmdt.model.address.District;
 import com.example.tmdt.repository.CityRepository;
 import com.example.tmdt.service.ICityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class CityService implements ICityService {
     private CityRepository cityRepository;
     @Override
     public void save(CityDTO dto) {
+        City city = cityMapper.toEntity(dto);
+        cityMapper.toDto(cityRepository.save(city));
 
     }
 

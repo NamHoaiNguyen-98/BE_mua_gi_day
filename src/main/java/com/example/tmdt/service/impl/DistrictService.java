@@ -3,6 +3,7 @@ package com.example.tmdt.service.impl;
 import com.example.tmdt.dto.DistrictDTO;
 import com.example.tmdt.mapper.DistrictMapper;
 import com.example.tmdt.model.address.District;
+import com.example.tmdt.model.address.Wards;
 import com.example.tmdt.repository.DistrictRepository;
 import com.example.tmdt.service.IDistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class DistrictService implements IDistrictService {
     private DistrictRepository districtRepository;
     @Override
     public void save(DistrictDTO dto) {
+        District district = districtMapper.toEntity(dto);
+        districtMapper.toDto(districtRepository.save(district));
 
     }
 
