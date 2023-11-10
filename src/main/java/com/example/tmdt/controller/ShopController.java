@@ -30,7 +30,19 @@ public class ShopController {
 
     @PostMapping
     ResponseEntity<?> save(@RequestBody ShopDTO shopDTO) {
-        shopService.save(shopDTO);
+        if (shopDTO.getId()!=null){
+        ShopDTO shopDTO1 = shopService.findOne(shopDTO.getId());
+            if (shopDTO.getWards().getId()==0){
+                shopDTO.setWards(shopDTO1.getWards());
+            }
+            if (shopDTO.getAvatar()==null){
+                shopDTO.setAvatar(shopDTO1.getAvatar());
+            }
+            shopService.save(shopDTO);}
+        else {
+            shopService.save(shopDTO);
+        }
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @GetMapping("/account/{id}")
