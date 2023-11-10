@@ -33,6 +33,10 @@ public class ProductController {
     ResponseEntity<Iterable<ProductDTO>> findAllStatus() {
         return new ResponseEntity<>(productService.findAllStatus(), HttpStatus.OK);
     }
+    @GetMapping("/search/{name}")
+    ResponseEntity<Iterable<ProductDTO>> searchByName(@PathVariable String name) {
+        return new ResponseEntity<>(productService.searchByName(name), HttpStatus.OK);
+    }
 
 
     @GetMapping("/{id}")

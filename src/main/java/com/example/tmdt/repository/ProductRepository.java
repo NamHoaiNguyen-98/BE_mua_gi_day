@@ -16,4 +16,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "SELECT * FROM product  " +
             "WHERE product.status IS NULL ",nativeQuery = true)
     List<Product> findAllStatus();
+    List<Product> findAllByNameContainingAndStatusIsNull (String name);
+
+
 }
