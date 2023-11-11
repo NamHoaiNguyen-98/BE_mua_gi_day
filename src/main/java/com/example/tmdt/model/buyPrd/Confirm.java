@@ -1,20 +1,17 @@
 package com.example.tmdt.model.buyPrd;
-import com.example.tmdt.security.model.Account;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
+
 @Data
 @Entity
-@Table(name = "Cart")
+@Table(name = "confirm")
 @EqualsAndHashCode(callSuper = false)
-public class Cart{
+public class Confirm {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    private Confirm confirm;
-    @ManyToOne
-    private Account account ;
+    private String name;
 }
-

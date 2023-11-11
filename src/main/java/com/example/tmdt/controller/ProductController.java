@@ -50,13 +50,9 @@ public class ProductController {
             ProductDTO productDTO1 = productService.findOne(productDTO.getId());
             List<ImageDTO> imageDTOS = productDTO1.getImage();
             if (productDTO.getImage().isEmpty()) {
-//                for (ImageDTO imageDTO : imageDTOS) {
-//                    imageService.save(imageDTO);
-//                }
                 productDTO.setImage(imageDTOS);
             }
             productService.save(productDTO);
-        } else {
         productService.save(productDTO); }
 
         return new ResponseEntity<>(HttpStatus.CREATED);
