@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,8 +53,13 @@ public class ProductController {
             if (productDTO.getImage().isEmpty()) {
                 productDTO.setImage(imageDTOS);
             }
+
             productService.save(productDTO);
-        productService.save(productDTO); }
+
+
+        }
+        productDTO.setCount(0);
+        productService.save(productDTO);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -63,7 +69,17 @@ public class ProductController {
     }
     @GetMapping("/acc/{id}")
     ResponseEntity<List<ProductDTO>> findByIdAcc(@PathVariable Long id) {
-        return new ResponseEntity<>(productService.findAllByAccount_Id(id),HttpStatus.OK);
+      List<ProductDTO> list = productService.findAllByAccount_Id(id);
+      List<ProductDTO> productDTOList = new ArrayList<>();
+        for (ProductDTO p: list
+             ) {
+            if (p.getStatus() == null) {
+                productDTOList.add(p);
+            }
+        }
+        return new ResponseEntity<>(productDTOList,HttpStatus.OK);
+
+
     }
 
 
