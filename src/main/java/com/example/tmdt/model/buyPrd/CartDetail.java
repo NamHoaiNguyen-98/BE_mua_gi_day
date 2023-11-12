@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 @Data
 @Entity
+
 @Table(name = "CartDetail")
 @EqualsAndHashCode(callSuper = false)
 public class CartDetail  {

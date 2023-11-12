@@ -31,10 +31,8 @@ public class Product {
     private Double promotion;
     @Column(columnDefinition = "integer default 0")
     private Integer count;
-
     @Column(nullable = true)
     private Integer status;
-
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comment;
     @ManyToOne

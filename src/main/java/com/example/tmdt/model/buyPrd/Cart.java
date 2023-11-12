@@ -12,8 +12,7 @@ public class Cart{
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    private Confirm confirm;
+    private String confirm;
     @ManyToOne
     private Account account ;
 }

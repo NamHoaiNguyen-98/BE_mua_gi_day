@@ -1,6 +1,5 @@
 package com.example.tmdt.dto;
 
-import com.example.tmdt.model.buyPrd.Confirm;
 import com.example.tmdt.security.model.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class CartDTO {
     private Long id;
-    private ConfirmDTO confirm;
+    private String confirm;
     private Account account ;
 }
 
