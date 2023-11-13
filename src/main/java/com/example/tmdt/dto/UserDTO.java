@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
@@ -21,11 +22,11 @@ public class UserDTO {
     private String name ;
     private String avatar ;
     private String gender ;
-    private Integer age ;
+    private LocalDate age ;
     private String phone ;
     private String email ;
     private String address ;
-    private WardsDTO wardsDTO;
+    private WardsDTO wards;
     private Discount discount ;
     private Account account ;
     private Integer changeRole ;

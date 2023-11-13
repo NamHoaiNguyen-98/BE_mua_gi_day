@@ -1,13 +1,14 @@
 package com.example.tmdt.controller;
 
+import com.example.tmdt.dto.ShopDTO;
+import com.example.tmdt.dto.UserDTO;
 import com.example.tmdt.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @RestController
@@ -23,5 +24,34 @@ public class UserController {
     @GetMapping("/user")
     public ResponseEntity<Iterable<String>> findListNameUser() {
         return new ResponseEntity<>(userService.listNameUser(), HttpStatus.OK);
+    }
+    @GetMapping("/")
+    public ResponseEntity<?> findAllUser(){
+        return new ResponseEntity<>(userService.findAll(),HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findOne(@PathVariable Long id){
+        Optional<UserDTO> userDTO = Optional.ofNullable(userService.findOne(id));
+        if (userDTO.isPresent()){
+         return new ResponseEntity<>(userDTO,HttpStatus.OK);
+        } return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    @PostMapping
+    public ResponseEntity<?> save(@RequestBody UserDTO userDTO){
+
+            UserDTO userDTO1 = userService.findOne(userDTO.getId());
+            if (userDTO.getWards().getId()==0){
+                userDTO.setWards(userDTO1.getWards());
+            }
+            if (userDTO.getAvatar()==null){
+                userDTO.setAvatar(userDTO1.getAvatar());
+            }
+            userService.save(userDTO);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+    @GetMapping("/account/{id}")
+    public ResponseEntity<?> findUserById(@PathVariable Long id){
+        UserDTO userDTO = userService.findUserByAccount(id);
+        return new ResponseEntity<>(userDTO,HttpStatus.OK);
     }
 }
