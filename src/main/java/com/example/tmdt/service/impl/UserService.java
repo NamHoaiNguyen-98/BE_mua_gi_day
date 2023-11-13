@@ -46,6 +46,14 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public UserDTO findUserByAccount(Long id) {
+        User user= userRepository.findUserByAccount_Id(id);
+        if (user!=null){
+            return userMapper.toDto(user);
+        } return null;
+    }
+
+    @Override
     public void save(UserDTO dto) {
         User user = userMapper.toEntity(dto);
         userMapper.toDto(userRepository.save(user));
