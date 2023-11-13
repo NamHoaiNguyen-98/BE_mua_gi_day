@@ -12,13 +12,16 @@ import com.example.tmdt.repository.CartDetailRepository;
 
 import com.example.tmdt.repository.CartRepository;
 import com.example.tmdt.repository.ShopRepository;
+import com.example.tmdt.repository.UserRepository;
 import com.example.tmdt.security.model.Account;
 import com.example.tmdt.security.repository.IAccountRepository;
 import com.example.tmdt.service.ICartDetailService;
+import com.example.tmdt.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +37,8 @@ public class CartDetailService implements ICartDetailService {
     private IAccountRepository accountRepository;
     @Autowired
     private ShopRepository shopRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private ProductMapper productMapper;
 
@@ -78,6 +83,7 @@ public class CartDetailService implements ICartDetailService {
                 Account account = optionalAccount.get();
                 cart.setAccount(account);
                 cart.setConfirm("0");
+                cart.setUser(userRepository.findById(idAccount).get());
             }
             cartRepository.save(cart);
         }
@@ -94,6 +100,7 @@ public class CartDetailService implements ICartDetailService {
             cartDetail.setProduct(product);
             cartDetail.setCart(cart);
         }
+
         cartDetailRepository.save(cartDetail);
     }
 
@@ -107,6 +114,23 @@ public class CartDetailService implements ICartDetailService {
     public List<CartDetailDTO> displayListBuy(Long idShop, String confirm) {
         Shop shop = shopRepository.findShopByIdAccount(idShop) ;
         return cartDetailMapper.toDto(cartDetailRepository.displayCartOfShop(shop.getId(),confirm));
+    }
+
+    @Override
+    public List<CartDetailDTO> displayAllOrder(Long idShop) {
+        List <CartDetail> cartDetail =  cartDetailRepository.findAllByProduct_Shop_Id(shopRepository.findShopByIdAccount(idShop).getId());
+        List <CartDetail > dto = new ArrayList<>() ;
+        for (CartDetail cart :
+                cartDetail
+             ) {
+                if(cart.getCart().getConfirm().equals("1")
+                        || cart.getCart().getConfirm().equals("2")
+                        || cart.getCart().getConfirm().equals("3")
+                        || cart.getCart().getConfirm().equals("5") ) {
+                    dto.add(cart) ;
+                }
+        }
+        return cartDetailMapper.toDto(dto);
     }
 
 

@@ -30,6 +30,7 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
             "inner join cart on cart_detail.product_id = product.id where product.shop_id = :idShop and cart.confirm = :confirm ;\n" +
             ";", nativeQuery = true)
     List<CartDetail> displayCartOfShop(@Param("idShop") Long idShop ,@Param("confirm") String confirm);
+    List<CartDetail> findAllByProduct_Shop_Id(Long idShop);
 
 
     @Modifying

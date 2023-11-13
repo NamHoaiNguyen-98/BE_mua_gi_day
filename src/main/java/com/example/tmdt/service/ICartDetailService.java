@@ -13,4 +13,5 @@ public interface ICartDetailService extends BaseService<CartDetailDTO> {
 
 
     List<CartDetailDTO> displayListBuy(Long idShop , String confirm);
+    List<CartDetailDTO> displayAllOrder(Long idShop);
 }
