@@ -3,14 +3,17 @@ package com.example.tmdt.repository;
 import com.example.tmdt.model.buyPrd.Cart;
 import com.example.tmdt.model.buyPrd.CartDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Transactional
 public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
     @Query(value = "SELECT * FROM cart_detail WHERE cart_id = :idCart AND product_id = :idProduct", nativeQuery = true)
     Optional<CartDetail> findCartDetailByCartAndProduct(@Param("idCart") Long idCart,
@@ -28,4 +31,16 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
             ";", nativeQuery = true)
     List<CartDetail> displayCartOfShop(@Param("idShop") Long idShop ,@Param("confirm") String confirm);
 
-}
+
+    @Modifying
+    @Query(value = "DELETE FROM cart_detail WHERE cart_detail.id = :idCartDetail", nativeQuery = true)
+    void deleteProductFromCart(@Param("idCartDetail") Long idCartDetail);
+    @Modifying
+    @Query(value = "DELETE FROM cart_detail WHERE cart_id = :idCart", nativeQuery = true)
+    void deleteCart(@Param("idCart") Long idCart);
+    @Modifying
+    @Query(value = "UPDATE cart_detail SET quantity = :quantity WHERE product_id = :idProduct AND cart_id = :idCart", nativeQuery = true)
+    void updateQuantityFromCart(@Param("quantity") Double quantity,
+                                @Param("idProduct") Long idProduct,
+                                @Param("idCart") Long idCart);
+ }
