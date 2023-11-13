@@ -20,9 +20,10 @@ public class CartDetailController {
     private ICartDetailService cartDetailService;
     @Autowired
     private ICartService cartService;
-    @GetMapping("/shop/{idShop}")
-    ResponseEntity<List<CartDetailDTO>> showCart(@PathVariable("idShop") Long idShop) {
-        List<CartDetailDTO> cartDetailDTOS = cartDetailService.displayListBuy(idShop , "1");
+
+    @GetMapping("/shop")
+    ResponseEntity<List<CartDetailDTO>> showCart(@RequestBody CartDTO cartDTO ) {
+        List<CartDetailDTO> cartDetailDTOS = cartDetailService.displayListBuy(cartDTO.getAccount().getId() , cartDTO.getConfirm());
         return new ResponseEntity<>(cartDetailDTOS, HttpStatus.OK);
     }
     @PostMapping("/changeOrder")

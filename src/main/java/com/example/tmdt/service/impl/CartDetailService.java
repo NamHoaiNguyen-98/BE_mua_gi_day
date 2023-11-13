@@ -7,9 +7,11 @@ import com.example.tmdt.mapper.ProductMapper;
 import com.example.tmdt.model.Product;
 import com.example.tmdt.model.buyPrd.Cart;
 import com.example.tmdt.model.buyPrd.CartDetail;
+import com.example.tmdt.model.fkProduct.Shop;
 import com.example.tmdt.repository.CartDetailRepository;
 
 import com.example.tmdt.repository.CartRepository;
+import com.example.tmdt.repository.ShopRepository;
 import com.example.tmdt.security.model.Account;
 import com.example.tmdt.security.repository.IAccountRepository;
 import com.example.tmdt.service.ICartDetailService;
@@ -30,6 +32,8 @@ public class CartDetailService implements ICartDetailService {
     private CartDetailMapper cartDetailMapper;
     @Autowired
     private IAccountRepository accountRepository;
+    @Autowired
+    private ShopRepository shopRepository;
     @Autowired
     private ProductMapper productMapper;
 
@@ -101,7 +105,8 @@ public class CartDetailService implements ICartDetailService {
 
     @Override
     public List<CartDetailDTO> displayListBuy(Long idShop, String confirm) {
-        return cartDetailMapper.toDto(cartDetailRepository.displayCartOfShop(idShop,confirm));
+        Shop shop = shopRepository.findShopByIdAccount(idShop) ;
+        return cartDetailMapper.toDto(cartDetailRepository.displayCartOfShop(shop.getId(),confirm));
     }
 
 
