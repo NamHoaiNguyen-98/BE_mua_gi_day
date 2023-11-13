@@ -13,10 +13,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartDTO {
+
     private Long id;
     private String confirm;
     private String reason;
     private Account account ;
+    private UserDTO user ;
     private Double TotalPrice;
 }
 

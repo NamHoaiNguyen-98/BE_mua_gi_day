@@ -1,4 +1,5 @@
 package com.example.tmdt.model.buyPrd;
+import com.example.tmdt.model.User;
 import com.example.tmdt.security.model.Account;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,5 +17,8 @@ public class Cart{
     private String reason;
     @ManyToOne
     private Account account ;
+    @ManyToOne
+    private User user ;
+
 }
 

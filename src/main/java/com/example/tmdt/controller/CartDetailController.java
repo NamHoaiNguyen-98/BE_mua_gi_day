@@ -26,6 +26,11 @@ public class CartDetailController {
         List<CartDetailDTO> cartDetailDTOS = cartDetailService.displayListBuy(cartDTO.getAccount().getId() , cartDTO.getConfirm());
         return new ResponseEntity<>(cartDetailDTOS, HttpStatus.OK);
     }
+    @GetMapping("/allOrder/{idAcc}")
+    ResponseEntity<List<CartDetailDTO>> showCartDetail(@PathVariable Long idAcc ) {
+        List<CartDetailDTO> cartDetailDTOS = cartDetailService.displayAllOrder(idAcc);
+        return new ResponseEntity<>(cartDetailDTOS, HttpStatus.OK);
+    }
     @PostMapping("/changeOrder")
     ResponseEntity<?> changeCartDetails(@RequestBody CartDTO cartDTO) {
         cartService.save(cartDTO);

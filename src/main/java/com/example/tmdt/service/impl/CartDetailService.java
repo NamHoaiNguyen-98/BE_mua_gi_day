@@ -109,6 +109,12 @@ public class CartDetailService implements ICartDetailService {
         return cartDetailMapper.toDto(cartDetailRepository.displayCartOfShop(shop.getId(),confirm));
     }
 
+    @Override
+    public List<CartDetailDTO> displayAllOrder(Long idShop) {
+
+        return cartDetailMapper.toDto(cartDetailRepository.findAllByProduct_Shop_Id(shopRepository.findShopByIdAccount(idShop).getId()));
+    }
+
 
     @Override
     public void deleteProductFromCart(Long idCartDetail) {
