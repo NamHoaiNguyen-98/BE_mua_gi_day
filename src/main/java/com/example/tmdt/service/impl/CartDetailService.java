@@ -7,7 +7,6 @@ import com.example.tmdt.mapper.ProductMapper;
 import com.example.tmdt.model.Product;
 import com.example.tmdt.model.buyPrd.Cart;
 import com.example.tmdt.model.buyPrd.CartDetail;
-import com.example.tmdt.model.fkProduct.Category;
 import com.example.tmdt.repository.CartDetailRepository;
 
 import com.example.tmdt.repository.CartRepository;
@@ -62,42 +61,7 @@ public class CartDetailService implements ICartDetailService {
         return null;
     }
 
-    //    @Override
-//    public void addToCart(CartDetailDTO cartDetailDTO, Long idAccount) {
-//        CartDetail cartDetail = cartDetailMapper.toEntity(cartDetailDTO);
-//        try {
-//            if (cartDetail.getId() == null) {
-//                Cart cart = new Cart();
-//                Optional<Account> optionalAccount = accountRepository.findById(idAccount);
-//                if (optionalAccount.isPresent()) {
-//                    Account account = optionalAccount.get();
-//                    cart.setAccount(account);
-//                }
-//                cartRepository.save(cart);
-//                cartDetail.setCart(cart);
-//                cartDetailRepository.save(cartDetail);
-//            } else {
-//                Optional<Cart> optionalCart = cartRepository.findById(cartDetailDTO.getCart().getId());
-//                if (optionalCart.isPresent()) {
-//                    Cart cart = optionalCart.get();
-//                    Optional<CartDetail> optionalCartDetail = cartDetailRepository.findCartDetailByCartAndProduct(
-//                            cartDetail.getCart().getId(), cartDetail.getProduct().getId());
-//                    if (optionalCartDetail.isPresent()) {
-//                        CartDetail cartDetailExist = optionalCartDetail.get();
-//                        cartDetailExist.setQuantity(cartDetailExist.getQuantity() + cartDetail.getQuantity());
-//                        cartDetailRepository.save(cartDetailExist);
-//                    } else {
-//                        cartDetail.setCart(cart);
-//                        cartDetailRepository.save(cartDetail);
-//                    }
-//                }
-//            }
-//        }catch (Exception e) {
-//            e.getStackTrace();
-//        }
-//
-//
-//    }
+    @Override
     public void addToCart(CartDetailDTO cartDetailDTO, Long idAccount) {
         Optional<Cart> cartOptional = cartRepository.findCartByIdAccount(idAccount);
         Cart cart;
@@ -134,4 +98,27 @@ public class CartDetailService implements ICartDetailService {
         List<CartDetail> cartDetails = cartDetailRepository.showCart(idAccount);
         return cartDetailMapper.toDto(cartDetails);
     }
+
+    @Override
+    public void deleteProductFromCart(Long idCartDetail) {
+        try {
+            cartDetailRepository.deleteProductFromCart(idCartDetail);
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteAllProductFromCart(Long idCart) {
+        cartDetailRepository.deleteCart(idCart);
+
+    }
+
+    @Override
+    public void updateQuantityFromCart(Double quantity, Long idProduct, Long idCart) {
+        cartDetailRepository.updateQuantityFromCart(quantity, idProduct, idCart);
+    }
+
 }
+
+

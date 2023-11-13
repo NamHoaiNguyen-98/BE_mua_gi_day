@@ -16,5 +16,6 @@ public class CartDTO {
     private Long id;
     private String confirm;
     private Account account ;
+    private Double TotalPrice;
 }
 
