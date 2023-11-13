@@ -21,4 +21,11 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
 
 //    @Query(value = "SELECT * FROM cart WHERE account_id = :idAccount", nativeQuery = true)
 //    Optional<Cart> findCartByIdAccount(@Param("idAccount") Long idAccount);
- }
+
+    @Query(value = "select * from cart_detail\n" +
+            "inner join product on cart_detail.product_id = product.id\n" +
+            "inner join cart on cart_detail.product_id = product.id where product.shop_id = :idShop and cart.confirm = :confirm ;\n" +
+            ";", nativeQuery = true)
+    List<CartDetail> displayCartOfShop(@Param("idShop") Long idShop ,@Param("confirm") String confirm);
+
+}

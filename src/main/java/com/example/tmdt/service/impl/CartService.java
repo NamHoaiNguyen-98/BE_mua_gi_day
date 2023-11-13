@@ -25,7 +25,9 @@ public class CartService implements ICartService {
 
     @Override
     public void save(CartDTO dto) {
-        Cart cart = cartMapper.toEntity(dto);
+        Cart cart = cartRepository.findById(dto.getId()).get();
+        cart.setConfirm(dto.getConfirm());
+        cart.setReason(dto.getReason());
         cartMapper.toDto(cartRepository.save(cart));
     }
 

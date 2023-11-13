@@ -13,6 +13,7 @@ public class Cart{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String confirm;
+    private String reason;
     @ManyToOne
     private Account account ;
 }

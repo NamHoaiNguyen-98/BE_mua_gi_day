@@ -7,4 +7,5 @@ import java.util.List;
 public interface ICartDetailService extends BaseService<CartDetailDTO> {
     void addToCart(CartDetailDTO cartDetailDTO, Long idAccount);
     List<CartDetailDTO> showCart(Long idAccount);
+    List<CartDetailDTO> displayListBuy(Long idShop , String confirm);
 }

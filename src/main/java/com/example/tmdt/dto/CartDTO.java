@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class CartDTO {
     private Long id;
     private String confirm;
+    private String reason;
     private Account account ;
 }
 
