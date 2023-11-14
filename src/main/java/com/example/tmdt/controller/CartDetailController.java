@@ -21,7 +21,7 @@ public class CartDetailController {
     @Autowired
     private ICartService cartService;
 
-    @GetMapping("/shop")
+    @PostMapping("/shop")
     ResponseEntity<List<CartDetailDTO>> showCart(@RequestBody CartDTO cartDTO ) {
         List<CartDetailDTO> cartDetailDTOS = cartDetailService.displayListBuy(cartDTO.getAccount().getId() , cartDTO.getConfirm());
         return new ResponseEntity<>(cartDetailDTOS, HttpStatus.OK);
