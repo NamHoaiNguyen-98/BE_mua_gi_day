@@ -101,7 +101,7 @@ public class CartDetailService implements ICartDetailService {
 
     @Override
     public List<CartDetailDTO> displayListBuy(Long idShop, String confirm) {
-        return cartDetailMapper.toDto(cartDetailRepository.displayCartOfShop(idShop,confirm));
+        return cartDetailMapper.toDto(cartDetailRepository.displayCartOfShop(idShop, confirm));
     }
 
 
