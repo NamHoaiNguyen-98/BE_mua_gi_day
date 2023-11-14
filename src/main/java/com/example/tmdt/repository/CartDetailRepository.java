@@ -44,4 +44,8 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
     void updateQuantityFromCart(@Param("quantity") Double quantity,
                                 @Param("idProduct") Long idProduct,
                                 @Param("idCart") Long idCart);
+
+    @Modifying
+    @Query(value = "DELETE FROM cart_detail WHERE product_id = :idProduct", nativeQuery = true)
+    void deleteCartDetailByProduct(@Param("idProduct") Long idProduct);
  }

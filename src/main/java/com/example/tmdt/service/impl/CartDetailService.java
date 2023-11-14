@@ -5,6 +5,7 @@ import com.example.tmdt.dto.CartDetailDTO;
 import com.example.tmdt.mapper.CartDetailMapper;
 import com.example.tmdt.mapper.ProductMapper;
 import com.example.tmdt.model.Product;
+import com.example.tmdt.model.User;
 import com.example.tmdt.model.buyPrd.Cart;
 import com.example.tmdt.model.buyPrd.CartDetail;
 import com.example.tmdt.model.fkProduct.Shop;
@@ -41,6 +42,7 @@ public class CartDetailService implements ICartDetailService {
     private UserRepository userRepository;
     @Autowired
     private ProductMapper productMapper;
+
 
 
     @Override
@@ -80,9 +82,11 @@ public class CartDetailService implements ICartDetailService {
             cart = new Cart();
             Optional<Account> optionalAccount = accountRepository.findById(idAccount);
             if (optionalAccount.isPresent()) {
+                User user = userRepository.findUserByAccount_Id(idAccount);
                 Account account = optionalAccount.get();
                 cart.setAccount(account);
                 cart.setConfirm("0");
+                cart.setUser(user);
             }
             cartRepository.save(cart);
         }
