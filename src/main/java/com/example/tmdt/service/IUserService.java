@@ -10,4 +10,5 @@ public interface IUserService extends BaseService<UserDTO> {
     List<String> listNameEmail() ;
     List<String> listNameUser() ;
     UserDTO findUserByAccount(Long id);
+
 }
