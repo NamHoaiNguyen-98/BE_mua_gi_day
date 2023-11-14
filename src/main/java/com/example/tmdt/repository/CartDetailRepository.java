@@ -27,7 +27,7 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
 
     @Query(value = "select * from cart_detail\n" +
             "inner join product on cart_detail.product_id = product.id\n" +
-            "inner join cart on cart_detail.product_id = product.id where product.shop_id = :idShop and cart.confirm = :confirm ;\n" +
+            "inner join cart on cart_detail.cart_id = cart.id where product.shop_id = :idShop and cart.confirm = :confirm ;\n" +
             ";", nativeQuery = true)
     List<CartDetail> displayCartOfShop(@Param("idShop") Long idShop ,@Param("confirm") String confirm);
     List<CartDetail> findAllByProduct_Shop_Id(Long idShop);

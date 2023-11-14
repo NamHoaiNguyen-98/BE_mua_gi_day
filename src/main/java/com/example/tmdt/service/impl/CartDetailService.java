@@ -115,6 +115,7 @@ public class CartDetailService implements ICartDetailService {
     @Override
     public List<CartDetailDTO> displayListBuy(Long idShop, String confirm) {
         Shop shop = shopRepository.findShopByIdAccount(idShop) ;
+        List<CartDetail> cartDetails = cartDetailRepository.displayCartOfShop(shop.getId(),confirm) ;
         return cartDetailMapper.toDto(cartDetailRepository.displayCartOfShop(shop.getId(),confirm));
     }
 
