@@ -1,9 +1,11 @@
 package com.example.tmdt.controller;
 
 import com.example.tmdt.dto.BillDTO;
+import com.example.tmdt.dto.BillDetailDTO;
 import com.example.tmdt.service.IBillDetailService;
 import com.example.tmdt.service.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
@@ -28,6 +30,19 @@ public class BillController {
     @PostMapping
     ResponseEntity<?> addToBill(@RequestBody List<Long> idCartDetail) {
         billDetailService.addToBill(idCartDetail);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    ResponseEntity<List<BillDetailDTO>> showBill(@Param("idAccount") Long idAccount) {
+        List<BillDetailDTO> billDetailDTOS = billDetailService.showBillByAccount(idAccount);
+        return new ResponseEntity<>(billDetailDTOS, HttpStatus.OK);
+    }
+
+    @PostMapping("/save")
+    ResponseEntity<?> saveToBill(@RequestBody List<BillDetailDTO> billDetailDTOS,
+                                 @Param("idAccount") Long idAccount) {
+        billDetailService.saveToBill(billDetailDTOS, idAccount);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
