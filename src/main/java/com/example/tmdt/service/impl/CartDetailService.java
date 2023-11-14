@@ -83,7 +83,6 @@ public class CartDetailService implements ICartDetailService {
                 Account account = optionalAccount.get();
                 cart.setAccount(account);
                 cart.setConfirm("0");
-                cart.setUser(userRepository.findById(idAccount).get());
             }
             cartRepository.save(cart);
         }
@@ -93,16 +92,13 @@ public class CartDetailService implements ICartDetailService {
         if (cartDetailOptional.isPresent()) {
             cartDetail = cartDetailOptional.get();
             cartDetail.setQuantity(cartDetail.getQuantity() + cartDetailDTO.getQuantity());
-            cartDetail.setPrice(cartDetail.getProduct().getPrice() * (100 - cartDetail.getProduct().getPromotion())/100);
         } else {
             cartDetail = new CartDetail();
             cartDetail.setQuantity(cartDetailDTO.getQuantity());
             Product product = productMapper.toEntity(cartDetailDTO.getProduct());
             cartDetail.setProduct(product);
             cartDetail.setCart(cart);
-            cartDetail.setPrice(cartDetail.getProduct().getPrice() * (100 - cartDetail.getProduct().getPromotion())/100);
         }
-
         cartDetailRepository.save(cartDetail);
     }
 
