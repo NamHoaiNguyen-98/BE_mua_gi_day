@@ -1,11 +1,12 @@
 package com.example.tmdt.service.impl;
 
 import com.example.tmdt.dto.BillDetailDTO;
-import com.example.tmdt.dto.CartDetailDTO;
+import com.example.tmdt.mapper.BillDetailMapper;
 import com.example.tmdt.model.Product;
 import com.example.tmdt.model.buyPrd.Bill;
 import com.example.tmdt.model.buyPrd.BillDetail;
 import com.example.tmdt.model.buyPrd.CartDetail;
+import com.example.tmdt.model.fkProduct.Shop;
 import com.example.tmdt.repository.*;
 import com.example.tmdt.service.IBillDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,15 @@ public class BillDetailService implements IBillDetailService {
     @Autowired
     private CartDetailRepository cartDetailRepository;
     @Autowired
-    private CartRepository cartRepository;
-    @Autowired
     private BillRepository billRepository;
     @Autowired
     private BillDetailRepository billDetailRepository;
     @Autowired
     private ProductRepository productRepository;
-
+    @Autowired
+    private ShopRepository shopRepository ;
+    @Autowired
+    private BillDetailMapper billDetailMapper ;
 
     @Override
     public void save(BillDetailDTO dto) {
@@ -59,6 +61,18 @@ public class BillDetailService implements IBillDetailService {
 
         }
     }
+
+    @Override
+    public List<BillDetailDTO> displayListBuy(Long idShop, String status) {
+        return null;
+    }
+
+    @Override
+    public List<BillDetailDTO> findByShop(Long idShop) {
+        Shop shop = shopRepository.findShopByIdAccount(idShop);
+        return billDetailMapper.toDto(billDetailRepository.findAllByProduct_Shop_Id(shop.getId()));
+    }
+
 
     private Map<Long, List<CartDetail>> groupCartDetailByShop(List<Long> idCartDetails) {
         Map<Long, List<CartDetail>> cartDetailsByShop = new HashMap<>();
