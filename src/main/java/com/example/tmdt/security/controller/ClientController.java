@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,8 +50,7 @@ public class ClientController {
     public ResponseEntity<?> sendMail(@RequestBody ClientSdi sdi) {
         Long idAcc = Long.parseLong(sdi.getUsername());
         Optional<Account> account = accountRepository.findById(idAcc);
-        sdi.setPassword(passwordEncoder.encode(sdi.getPassword()));
-        if (account.get().getPassword().equals(sdi.getPassword())) {
+        if (passwordEncoder.matches(sdi.getPassword(), account.get().getPassword())){
             clientService.create(sdi);
             return ResponseEntity.ok(sdi);
 
