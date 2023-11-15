@@ -24,15 +24,15 @@ public class BillDetailService implements IBillDetailService {
     @Autowired
     private CartDetailRepository cartDetailRepository;
     @Autowired
-    private CartRepository cartRepository;
-    @Autowired
     private BillRepository billRepository;
     @Autowired
     private BillDetailRepository billDetailRepository;
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private BillDetailMapper billDetailMapper;
+    private ShopRepository shopRepository ;
+    @Autowired
+    private BillDetailMapper billDetailMapper ;
     @Autowired
     private BillMapper billMapper;
     @Autowired
@@ -106,6 +106,16 @@ public class BillDetailService implements IBillDetailService {
 
     }
 
+    @Override
+    public List<BillDetailDTO> displayListBuy(Long idShop, String status) {
+        return null;
+    }
+
+    @Override
+    public List<BillDetailDTO> findByShop(Long idShop) {
+        return null;
+    }
+
 
     private void createBillDetail( CartDetail cartDetail) {
         Optional<Bill> billOptional = billRepository.findBillByIdAccount(cartDetail.getCart().getAccount().getId(), cartDetail.getProduct().getShop().getId());
@@ -130,6 +140,7 @@ public class BillDetailService implements IBillDetailService {
         Double quantity = cartDetail.getQuantity();
         Product product = cartDetail.getProduct();
         if (quantity <= product.getQuantity()) {
+            product.setQuantity((int) (product.getQuantity() - quantity));
             productRepository.save(product);
             billDetailRepository.save(billDetail);
         }

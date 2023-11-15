@@ -9,5 +9,7 @@ public interface IBillDetailService extends BaseService<BillDetailDTO> {
     List<BillDetailDTO> showBillByAccount(Long idAccount);
 
     void saveToBill(List<BillDetailDTO> billDetailDTOS , Long idAccount);
+    List<BillDetailDTO> displayListBuy(Long idShop , String status);
+    List<BillDetailDTO> findByShop(Long idShop);
 
 }
