@@ -24,7 +24,6 @@ public class Bill {
     private String phone;
     private String total;
     private LocalDate date ;
-    private String status ;
     private String reason;
 
     @ManyToOne
