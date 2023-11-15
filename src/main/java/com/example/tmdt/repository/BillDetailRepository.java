@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
-    @Query(value = "SELECT * FROM bill_detail bd JOIN bill on bd.bill_id = bill.id WHERE account_id = :idAccount", nativeQuery = true)
-    List<BillDetail> showBillByAccount(@Param("idAccount") Long idAccount);
+    @Query(value = "SELECT * FROM bill_detail bd JOIN bill on bill_id = bill.id WHERE account_id = :idAccount AND bill.status = :status", nativeQuery = true)
+    List<BillDetail> showBillByAccountAndStatus(@Param("idAccount") Long idAccount,
+                                                @Param("status") String status);
 }

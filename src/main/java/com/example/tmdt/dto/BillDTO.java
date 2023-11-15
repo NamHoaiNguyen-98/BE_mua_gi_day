@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = false)
@@ -24,4 +22,5 @@ public class BillDTO {
     private String total;
     private LocalDate date;
     private Shop shop;
+    private String status;
 }

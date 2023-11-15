@@ -27,4 +27,6 @@ public class Bill {
 
     @ManyToOne
     private Shop shop;
+    @Column(columnDefinition = "varchar(255) default '0'")
+    private String status;
 }

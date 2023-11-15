@@ -76,9 +76,10 @@ public class BillDetailService implements IBillDetailService {
     }
 
     @Override
-    public List<BillDetailDTO> showBillByAccount(Long idAccount) {
-        List<BillDetail> billDetails = billDetailRepository.showBillByAccount(idAccount);
-        return billDetailMapper.toDto(billDetails);
+    public List<BillDetailDTO> showBillByAccountAndStatus(Long idAccount, String status) {
+            List<BillDetail> billDetails = billDetailRepository.showBillByAccountAndStatus(idAccount, status);
+            return billDetailMapper.toDto(billDetails);
+
     }
 
     @Override
@@ -96,8 +97,8 @@ public class BillDetailService implements IBillDetailService {
                 bill.setAddress(user.getAddress());
                 bill.setWards(user.getWards());
                 bill.setDate(LocalDate.now());
+                bill.setStatus("Chờ xác nhận");
                 billRepository.save(bill);
-
             }
             billRepository.save(bill);
         }
@@ -108,32 +109,38 @@ public class BillDetailService implements IBillDetailService {
 
 
     private void createBillDetail( CartDetail cartDetail) {
-        Optional<Bill> billOptional = billRepository.findBillByIdAccount(cartDetail.getCart().getAccount().getId(), cartDetail.getProduct().getShop().getId());
-        System.out.println(cartDetail.getCart().getAccount().getId());
-        Bill bill;
-        if (billOptional.isPresent()) {
-            bill = billOptional.get();
-        } else {
-            bill = new Bill();
-            bill.setAccount(cartDetail.getCart().getAccount());
-            bill.setShop(cartDetail.getProduct().getShop());
-            billRepository.save(bill);
-        }
-        BillDetail billDetail = new BillDetail();
-        billDetail.setBill(bill);
-        billDetail.setProduct(cartDetail.getProduct());
-        billDetail.setQuantity(cartDetail.getQuantity());
-        Double newPrice = cartDetail.getProduct().getPrice() - (cartDetail.getProduct().getPrice() * cartDetail.getProduct().getPromotion() / 100);
-        billDetail.setPrice(newPrice);
-        Double total = cartDetail.getQuantity() * newPrice;
-        billDetail.setTotal(total);
-        Double quantity = cartDetail.getQuantity();
-        Product product = cartDetail.getProduct();
-        if (quantity <= product.getQuantity()) {
-            productRepository.save(product);
-            billDetailRepository.save(billDetail);
+        try {
+
+
+            Optional<Bill> billOptional = billRepository.findBillByIdAccount(cartDetail.getCart().getAccount().getId(), cartDetail.getProduct().getShop().getId());
+            Bill bill;
+            if (billOptional.isPresent() && billOptional.get().getStatus().equals("0")) {
+                bill = billOptional.get();
+            } else {
+                bill = new Bill();
+                bill.setAccount(cartDetail.getCart().getAccount());
+                bill.setShop(cartDetail.getProduct().getShop());
+                bill.setStatus("0");
+                bill.setDate(LocalDate.now());
+                billRepository.save(bill);
+            }
+            BillDetail billDetail = new BillDetail();
+            billDetail.setBill(bill);
+            billDetail.setProduct(cartDetail.getProduct());
+            billDetail.setQuantity(cartDetail.getQuantity());
+            Double newPrice = cartDetail.getProduct().getPrice() - (cartDetail.getProduct().getPrice() * cartDetail.getProduct().getPromotion() / 100);
+            billDetail.setPrice(newPrice);
+            Double total = cartDetail.getQuantity() * newPrice;
+            billDetail.setTotal(total);
+            Double quantity = cartDetail.getQuantity();
+            Product product = cartDetail.getProduct();
+            if (quantity <= product.getQuantity()) {
+                productRepository.save(product);
+                billDetailRepository.save(billDetail);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
 
 }
