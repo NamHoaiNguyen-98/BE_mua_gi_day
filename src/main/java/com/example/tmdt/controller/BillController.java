@@ -52,7 +52,7 @@ public class BillController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PostMapping("/rejection")
-    public ResponseEntity<?> rejection (@RequestBody List<BillDetail> billDetails , @RequestParam String reason) {
+    public ResponseEntity<?> rejection (@RequestBody List<BillDetail> billDetails , @RequestParam("reason") String reason) {
         billService.rejection(billDetails ,reason);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
