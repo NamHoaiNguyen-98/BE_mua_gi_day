@@ -17,6 +17,7 @@ public class FilterService implements IFilterService {
         try {
             return filterRepository.searchFilter(
                     filter.getCategory().getId(),
+                    filter.getBrand().getId(),
                     filter.getMaxPrice(),
                     filter.getMinPrice(),
                     filter.getWards().getId(),

@@ -3,20 +3,23 @@ package com.example.tmdt.model;
 import com.example.tmdt.model.address.City;
 import com.example.tmdt.model.address.District;
 import com.example.tmdt.model.address.Wards;
+import com.example.tmdt.model.fkProduct.Brand;
 import com.example.tmdt.model.fkProduct.Category;
 
 public class Filter {
     private Double maxPrice;
     private Double minPrice;
     private Category category;
+    private Brand brand;
     private Wards wards;
     private District district;
     private City city;
 
-    public Filter(Double maxPrice, Double minPrice, Category category, Wards wards, District district, City city) {
+    public Filter(Double maxPrice, Double minPrice, Category category, Brand brand, Wards wards, District district, City city) {
         this.maxPrice = maxPrice;
         this.minPrice = minPrice;
         this.category = category;
+        this.brand = brand;
         this.wards = wards;
         this.district = district;
         this.city = city;
@@ -68,5 +71,13 @@ public class Filter {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 }
