@@ -11,6 +11,7 @@ import com.example.tmdt.model.User;
 import com.example.tmdt.model.buyPrd.Bill;
 import com.example.tmdt.model.buyPrd.BillDetail;
 import com.example.tmdt.model.buyPrd.CartDetail;
+import com.example.tmdt.model.fkProduct.Shop;
 import com.example.tmdt.repository.*;
 import com.example.tmdt.service.IBillDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,7 +114,8 @@ public class BillDetailService implements IBillDetailService {
 
     @Override
     public List<BillDetailDTO> findByShop(Long idShop) {
-        return null;
+        Shop shop = shopRepository.findShopByIdAccount(idShop);
+        return billDetailMapper.toDto(billDetailRepository.findAllByProduct_Shop_Id(shop.getId()));
     }
 
 
