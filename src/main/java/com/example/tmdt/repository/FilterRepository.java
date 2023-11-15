@@ -7,16 +7,19 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public interface FilterRepository extends JpaRepository<Product, Long> {
     @Query(value = "select * " +
             "from product p " +
+            "join brand b on p.brand_id = b.id " +
             "join category c on p.category_id = c.id " +
             "join shop s on s.id = p.shop_id " +
             "join wards w on w.id = s.wards_id " +
             "join district d on w.district_id = d.id " +
             "join city ct on d.city_id = ct.id " +
             "where (:category_id is null or p.category_id = :category_id) " +
+            "and (:brand_id is null or p.brand_id = :brand_id) " +
             "and (:maxPrice is null or p.price <= :maxPrice) " +
             "and (:minPrice is null or p.price >= :minPrice) " +
             "and (:wards_id is null or s.wards_id = :wards_id) " +
@@ -24,7 +27,8 @@ public interface FilterRepository extends JpaRepository<Product, Long> {
             "and (:city_id is null or d.city_id = :city_id) " +
             "order by count desc",
             nativeQuery = true)
-    List<Product> searchFilter(@Param("category_id") Long category_id,
+    List<Product> searchFilter(@Param("brand_id") Long brand_id,
+                               @Param("category_id") Long category_id,
                                @Param("maxPrice") Double maxPrice,
                                @Param("minPrice") Double minPrice,
                                @Param("wards_id") Long wards_id,
