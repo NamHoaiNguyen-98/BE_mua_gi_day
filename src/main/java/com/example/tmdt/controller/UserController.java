@@ -40,12 +40,12 @@ public class UserController {
     @PostMapping("/change")
     public ResponseEntity<String> saveAccount(@RequestBody Account user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        Optional<Account> account1 = account.findById(user.getId());
-//        if (account1.isPresent() && user.getRoles().isEmpty()){
-//            user.setRoles(account1.get().getRoles());
-//        }
         account.save(user);
         return new ResponseEntity<>("Đổi mật khẩu thành công!", HttpStatus.OK);
+    }
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?> findAccountByEmail(@PathVariable String email){
+        return  new ResponseEntity<>(account.findAccountByEmail(email),HttpStatus.OK);
     }
     @GetMapping("/user")
     public ResponseEntity<Iterable<String>> findListNameUser() {

@@ -58,4 +58,9 @@ public class ClientController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
+    @PostMapping(value = "sendMailPass")
+    public ResponseEntity<?> sendMailNewPass(@RequestBody ClientSdi sdi){
+        clientService.create(sdi);
+        return ResponseEntity.ok(sdi);
+    }
 }
