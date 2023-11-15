@@ -28,4 +28,7 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
             "            inner join bill on bill_detail.bill_id = bill.id where product.shop_id = :idShop and bill.status = :status\n" +
             ";" , nativeQuery = true)
     List<BillDetail> displayBillOfShop(@Param("idShop") Long idShop ,@Param("status") String status);
+    @Query(value = "SELECT * FROM bill_detail bd JOIN bill on bill_id = bill.id WHERE account_id = :idAccount AND bill.status = :status", nativeQuery = true)
+    List<BillDetail> showBillByAccountAndStatus(@Param("idAccount") Long idAccount,
+                                                @Param("status") String status);
 }

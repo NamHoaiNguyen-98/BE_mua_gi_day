@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IBillDetailService extends BaseService<BillDetailDTO> {
     void addToBill(List<Long> idCartDetails);
-    List<BillDetailDTO> showBillByAccount(Long idAccount);
+    List<BillDetailDTO> showBillByAccountAndStatus(Long idAccount, String status);
 
     void saveToBill(List<BillDetailDTO> billDetailDTOS , Long idAccount);
     List<BillDetailDTO> displayListBuy(Long idShop , String status);
