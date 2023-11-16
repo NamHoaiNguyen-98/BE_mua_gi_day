@@ -1,6 +1,7 @@
 package com.example.tmdt.controller;
 
-import com.example.tmdt.dto.BillDTO;
+
+import com.example.tmdt.dto.CartDetailDTO;
 import com.example.tmdt.model.buyPrd.BillDetail;
 import com.example.tmdt.dto.BillDetailDTO;
 import com.example.tmdt.service.IBillDetailService;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,11 +28,11 @@ public class BillController {
 //        billService.save(billDTO);
 //        return new ResponseEntity<>(HttpStatus.CREATED);
 //    }
-    @PostMapping
-    ResponseEntity<?> addToBill (@RequestBody List<Long> idCartDetail) {
-        billDetailService.addToBill(idCartDetail);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    ResponseEntity<?> addToBill (@RequestBody List<Long> idCartDetail) {
+//        billDetailService.addToBill(idCartDetail);
+//        return new ResponseEntity<>(HttpStatus.CREATED);
+//    }
 
     @GetMapping
     ResponseEntity<List<BillDetailDTO>> showBill(@Param("idAccount") Long idAccount,
@@ -45,10 +45,10 @@ public class BillController {
 
     }
 
-    @PostMapping("/save")
-    ResponseEntity<?> saveToBill(@RequestBody List<BillDetailDTO> billDetailDTOS,
-                                 @Param("idAccount") Long idAccount) {
-        billDetailService.saveToBill(billDetailDTOS, idAccount);
+    @PostMapping("/save/bill")
+    ResponseEntity<?> saveToBill(@RequestBody List<CartDetailDTO> cartDetailDTOS,
+            @Param("idAccount") Long idAccount) {
+        billDetailService.addToBill(cartDetailDTOS, idAccount);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PostMapping("/accept")

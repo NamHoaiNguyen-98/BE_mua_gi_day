@@ -1,6 +1,7 @@
 package com.example.tmdt.controller;
 
 import com.example.tmdt.dto.CartDetailDTO;
+import com.example.tmdt.service.IBillDetailService;
 import com.example.tmdt.service.ICartDetailService;
 import com.example.tmdt.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class CartController {
     private ICartDetailService cartDetailService;
     @Autowired
     private ICartService cartService;
+    @Autowired
+    private IBillDetailService billDetailService;
 
     @PostMapping("/add")
     ResponseEntity<?> addToCart(@RequestBody CartDetailDTO cartDetailDTO,
@@ -49,5 +52,12 @@ public class CartController {
         cartDetailService.updateQuantityFromCart(quantity, idProduct, idCart);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @PostMapping("/showProductUserSelect")
+    ResponseEntity<List<CartDetailDTO>> showProductUserSelect(@RequestBody List<Long> idCartDetail) {
+        List<CartDetailDTO> cartDetailDTOS = billDetailService.showProductUserSelect(idCartDetail);
+        return new ResponseEntity<>(cartDetailDTOS, HttpStatus.OK);
+    }
+
 
 }
