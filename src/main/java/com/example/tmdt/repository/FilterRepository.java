@@ -25,6 +25,7 @@ public interface FilterRepository extends JpaRepository<Product, Long> {
             "and (:wards_id is null or s.wards_id = :wards_id) " +
             "and (:district_id is null or w.district_id = :district_id) " +
             "and (:city_id is null or d.city_id = :city_id) " +
+            "and (p.status is null) " +
             "order by count desc",
             nativeQuery = true)
     List<Product> searchFilter(@Param("brand_id") Long brand_id,

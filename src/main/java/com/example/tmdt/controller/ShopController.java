@@ -22,8 +22,8 @@ public class ShopController {
         return new ResponseEntity<>(shopDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("/id")
-    ResponseEntity<ShopDTO> findOne(@Param("id") Long id) {
+    @GetMapping("/{id}")
+    ResponseEntity<ShopDTO> findOne(@PathVariable("id") Long id) {
         ShopDTO shopDTO = shopService.findOne(id);
         return new ResponseEntity<>(shopDTO, HttpStatus.OK);
     }
