@@ -20,8 +20,8 @@ public interface FilterRepository extends JpaRepository<Product, Long> {
             "join city ct on d.city_id = ct.id " +
             "where (:category_id is null or p.category_id = :category_id) " +
             "and (:brand_id is null or p.brand_id = :brand_id) " +
-            "and (:maxPrice is null or p.price <= :maxPrice) " +
-            "and (:minPrice is null or p.price >= :minPrice) " +
+            "and (:maxPrice is null or (p.price - (p.price* (p.promotion/100))) <= :maxPrice) " +
+            "and (:minPrice is null or (p.price - (p.price* (p.promotion/100))) >= :minPrice) " +
             "and (:wards_id is null or s.wards_id = :wards_id) " +
             "and (:district_id is null or w.district_id = :district_id) " +
             "and (:city_id is null or d.city_id = :city_id) " +
