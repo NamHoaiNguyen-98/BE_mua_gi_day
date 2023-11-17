@@ -115,7 +115,11 @@ public class BillDetailService implements IBillDetailService {
     @Override
     public List<BillDetailDTO> findByShop(Long idShop) {
         Shop shop = shopRepository.findShopByIdAccount(idShop);
-        return billDetailMapper.toDto(billDetailRepository.findAllByProduct_Shop_Id(shop.getId()));
+        try {
+            return billDetailMapper.toDto(billDetailRepository.findAllByProduct_Shop_Id(shop.getId()));
+        }catch (Exception e) {
+            return new ArrayList<>() ;
+        }
     }
 
     @Override
