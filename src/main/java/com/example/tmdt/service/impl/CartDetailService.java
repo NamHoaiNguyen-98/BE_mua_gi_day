@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CartDetailService implements ICartDetailService {
+public class  CartDetailService implements ICartDetailService {
     @Autowired
     private CartDetailRepository cartDetailRepository;
     @Autowired
