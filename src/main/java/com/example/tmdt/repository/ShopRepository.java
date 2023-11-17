@@ -9,4 +9,5 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
     @Query(value = "select * from Shop as s where s.account_id = :id",nativeQuery = true)
     Shop findShopByIdAccount(@Param("id") Long id);
 
+
 }

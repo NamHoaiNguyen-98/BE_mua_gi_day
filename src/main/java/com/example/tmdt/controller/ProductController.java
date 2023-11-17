@@ -78,6 +78,18 @@ public class ProductController {
             }
         }
         return new ResponseEntity<>(productDTOList,HttpStatus.OK);
+    }
+    @GetMapping("/shop/{id}")
+    ResponseEntity<List<ProductDTO>> findByIdShop(@PathVariable Long id) {
+        List<ProductDTO> list = productService.findAllByShop_Id(id);
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for (ProductDTO p: list
+        ) {
+            if (p.getStatus() == null) {
+                productDTOList.add(p);
+            }
+        }
+        return new ResponseEntity<>(productDTOList,HttpStatus.OK);
 
 
     }
