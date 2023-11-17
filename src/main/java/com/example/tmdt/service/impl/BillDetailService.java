@@ -52,6 +52,13 @@ public class BillDetailService implements IBillDetailService {
 
     @Override
     public void delete(Long id) {
+        Optional<BillDetail> billDetailOptional = billDetailRepository.findById(id);
+        if (billDetailOptional.isPresent()) {
+            BillDetail billDetail = billDetailOptional.get();
+            billDetail.getBill().setStatus("Đơn hủy");
+            billDetailRepository.save(billDetail);
+        }
+
 
     }
 
@@ -134,6 +141,8 @@ public class BillDetailService implements IBillDetailService {
         }
         return cartDetailMapper.toDto(cartDetails);
     }
+
+
 
 
     private void createBillDetail(CartDetail cartDetail, Long idAccount) {

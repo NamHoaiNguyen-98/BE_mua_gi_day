@@ -30,4 +30,9 @@ public class BillDetailController {
         List<BillDTO> billDTOS = billService.findByShop(idAcc);
         return new ResponseEntity<>(billDTOS, HttpStatus.OK);
     }
+    @DeleteMapping("/delete/{idBillDetail}")
+    ResponseEntity<?> deleteByIdBillDetail(@PathVariable("idBillDetail") Long idBillDetail) {
+        billDetailService.delete(idBillDetail);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
