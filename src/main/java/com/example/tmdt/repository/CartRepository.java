@@ -1,6 +1,6 @@
 package com.example.tmdt.repository;
 
-import com.example.tmdt.model.buyPrd.Cart;
+import com.example.tmdt.model.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

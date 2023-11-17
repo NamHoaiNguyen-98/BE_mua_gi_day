@@ -1,19 +1,14 @@
 package com.example.tmdt.service.impl;
 
 import com.example.tmdt.dto.CartDTO;
-import com.example.tmdt.dto.CartDetailDTO;
-import com.example.tmdt.mapper.CartDetailMapper;
 import com.example.tmdt.mapper.CartMapper;
-import com.example.tmdt.model.buyPrd.Cart;
-import com.example.tmdt.model.buyPrd.CartDetail;
-import com.example.tmdt.repository.CartDetailRepository;
+import com.example.tmdt.model.Cart;
 import com.example.tmdt.repository.CartRepository;
 import com.example.tmdt.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CartService implements ICartService {

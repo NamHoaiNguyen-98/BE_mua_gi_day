@@ -2,8 +2,6 @@ package com.example.tmdt.model;
 
 import javax.persistence.*;
 
-import com.example.tmdt.model.address.Wards;
-import com.example.tmdt.security.model.Account;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,25 +11,22 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "User")
 @EqualsAndHashCode(callSuper = false)
-public class User {
+public class User extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
+    private Long id;
 
-    private String name ;
-    private String avatar ;
-    private String gender ;
-    private LocalDate age ;
-    private String phone ;
-    private String email ;
+    private String gender;
+    private LocalDate dateOfBirth;
     private String address;
     @ManyToOne
     private Wards wards;
     @ManyToOne
-    private Discount discount ;
+    @JoinColumn(name = "discount_id")
+    private Discount discount;
     @OneToOne
-    private Account account ;
-    @Column(columnDefinition = "integer default 0")
-    private Integer changeRole ;
+    @JoinColumn(name = "account_id")
+    private Account account;
+    private Boolean isAccountNonLocked;
 
 }

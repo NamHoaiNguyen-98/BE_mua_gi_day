@@ -1,6 +1,6 @@
 package com.example.tmdt.security.service.impl;
-import com.example.tmdt.security.model.Account;
-import com.example.tmdt.security.model.AccountPrinciple;
+import com.example.tmdt.model.Account;
+import com.example.tmdt.model.AccountPrinciple;
 import com.example.tmdt.security.repository.IAccountRepository;
 import com.example.tmdt.security.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,18 +6,17 @@ import com.example.tmdt.mapper.CartDetailMapper;
 import com.example.tmdt.mapper.ProductMapper;
 import com.example.tmdt.model.Product;
 import com.example.tmdt.model.User;
-import com.example.tmdt.model.buyPrd.Cart;
-import com.example.tmdt.model.buyPrd.CartDetail;
-import com.example.tmdt.model.fkProduct.Shop;
+import com.example.tmdt.model.Cart;
+import com.example.tmdt.model.CartDetail;
+import com.example.tmdt.model.Shop;
 import com.example.tmdt.repository.CartDetailRepository;
 
 import com.example.tmdt.repository.CartRepository;
 import com.example.tmdt.repository.ShopRepository;
 import com.example.tmdt.repository.UserRepository;
-import com.example.tmdt.security.model.Account;
+import com.example.tmdt.model.Account;
 import com.example.tmdt.security.repository.IAccountRepository;
 import com.example.tmdt.service.ICartDetailService;
-import com.example.tmdt.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,5 @@
 package com.example.tmdt.security.service.impl;
-import com.example.tmdt.security.model.Role;
+import com.example.tmdt.model.Role;
 import com.example.tmdt.security.repository.IRoleRepository;
 import com.example.tmdt.security.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;

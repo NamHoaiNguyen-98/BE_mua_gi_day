@@ -2,8 +2,7 @@ package com.example.tmdt.service.impl;
 
 import com.example.tmdt.dto.WardsDTO;
 import com.example.tmdt.mapper.WardsMapper;
-import com.example.tmdt.model.Product;
-import com.example.tmdt.model.address.Wards;
+import com.example.tmdt.model.Wards;
 import com.example.tmdt.repository.WardsRepository;
 import com.example.tmdt.service.IWardsService;
 import org.springframework.beans.factory.annotation.Autowired;

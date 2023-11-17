@@ -1,8 +1,8 @@
 package com.example.tmdt.security.controller;
 import com.example.tmdt.security.jwt.service.JwtResponse;
 import com.example.tmdt.security.jwt.service.JwtService;
-import com.example.tmdt.security.model.Account;
-import com.example.tmdt.security.model.Role;
+import com.example.tmdt.model.Account;
+import com.example.tmdt.model.Role;
 import com.example.tmdt.security.service.IAccountService;
 import com.example.tmdt.security.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;

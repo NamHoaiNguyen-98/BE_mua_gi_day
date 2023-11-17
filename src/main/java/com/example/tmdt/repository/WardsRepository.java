@@ -1,5 +1,5 @@
 package com.example.tmdt.repository;
-import com.example.tmdt.model.address.Wards;
+import com.example.tmdt.model.Wards;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

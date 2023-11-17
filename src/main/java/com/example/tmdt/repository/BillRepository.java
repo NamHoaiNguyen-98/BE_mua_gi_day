@@ -1,6 +1,5 @@
 package com.example.tmdt.repository;
-import com.example.tmdt.model.buyPrd.Bill;
-import com.example.tmdt.model.buyPrd.BillDetail;
+import com.example.tmdt.model.Bill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

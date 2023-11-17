@@ -1,4 +1,4 @@
-package com.example.tmdt.security.model;
+package com.example.tmdt.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

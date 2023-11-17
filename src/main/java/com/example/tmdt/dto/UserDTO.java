@@ -2,15 +2,12 @@ package com.example.tmdt.dto;
 
 import com.example.tmdt.model.Discount;
 
-import com.example.tmdt.security.model.Account;
+import com.example.tmdt.model.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = false)

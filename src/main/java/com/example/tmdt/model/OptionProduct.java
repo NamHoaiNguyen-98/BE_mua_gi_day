@@ -1,19 +1,17 @@
-package com.example.tmdt.model.address;
-
+package com.example.tmdt.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 @Data
+
 @Entity
-@Table(name = "Wards")
+@Table(name = "OptionProduct")
 @EqualsAndHashCode(callSuper = false)
-public class Wards  {
+public class OptionProduct  {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToOne
-    private District district ;
 }

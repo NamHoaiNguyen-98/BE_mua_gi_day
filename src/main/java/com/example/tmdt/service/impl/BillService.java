@@ -3,10 +3,9 @@ package com.example.tmdt.service.impl;
 import com.example.tmdt.dto.BillDTO;
 import com.example.tmdt.mapper.BillMapper;
 import com.example.tmdt.model.Product;
-import com.example.tmdt.model.buyPrd.Bill;
-import com.example.tmdt.model.buyPrd.BillDetail;
-import com.example.tmdt.model.buyPrd.CartDetail;
-import com.example.tmdt.model.fkProduct.Shop;
+import com.example.tmdt.model.Bill;
+import com.example.tmdt.model.BillDetail;
+import com.example.tmdt.model.Shop;
 import com.example.tmdt.repository.BillDetailRepository;
 import com.example.tmdt.repository.BillRepository;
 import com.example.tmdt.repository.ProductRepository;
@@ -15,10 +14,7 @@ import com.example.tmdt.service.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class BillService implements IBillService {

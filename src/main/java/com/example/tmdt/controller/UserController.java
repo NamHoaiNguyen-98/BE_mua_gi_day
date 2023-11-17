@@ -1,8 +1,7 @@
 package com.example.tmdt.controller;
 
-import com.example.tmdt.dto.ShopDTO;
 import com.example.tmdt.dto.UserDTO;
-import com.example.tmdt.security.model.Account;
+import com.example.tmdt.model.Account;
 import com.example.tmdt.security.repository.IAccountRepository;
 import com.example.tmdt.security.service.IAccountService;
 import com.example.tmdt.service.IUserService;

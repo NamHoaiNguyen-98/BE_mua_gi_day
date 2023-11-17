@@ -1,5 +1,5 @@
 package com.example.tmdt.security.repository;
-import com.example.tmdt.security.model.Account;
+import com.example.tmdt.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

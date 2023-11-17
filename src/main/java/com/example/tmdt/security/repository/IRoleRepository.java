@@ -2,7 +2,7 @@ package com.example.tmdt.security.repository;
 
 
 
-import com.example.tmdt.security.model.Role;
+import com.example.tmdt.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,9 +1,8 @@
 package com.example.tmdt.security.controller;
 
 
-import com.example.tmdt.model.User;
 import com.example.tmdt.security.DTO.sdi.ClientSdi;
-import com.example.tmdt.security.model.Account;
+import com.example.tmdt.model.Account;
 import com.example.tmdt.security.repository.IAccountRepository;
 import com.example.tmdt.security.service.ClientService;
 import com.example.tmdt.service.IUserService;
@@ -13,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 

@@ -2,7 +2,7 @@ package com.example.tmdt.service.impl;
 
 import com.example.tmdt.dto.ImageDTO;
 import com.example.tmdt.mapper.ImageMapper;
-import com.example.tmdt.model.fkProduct.Image;
+import com.example.tmdt.model.Image;
 import com.example.tmdt.repository.ImageRepository;
 import com.example.tmdt.service.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;

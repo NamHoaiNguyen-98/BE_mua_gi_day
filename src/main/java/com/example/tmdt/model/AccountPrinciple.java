@@ -1,4 +1,4 @@
-package com.example.tmdt.security.model;
+package com.example.tmdt.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,11 +1,5 @@
 package com.example.tmdt.model;
 
-import com.example.tmdt.model.address.City;
-import com.example.tmdt.model.address.District;
-import com.example.tmdt.model.address.Wards;
-import com.example.tmdt.model.fkProduct.Brand;
-import com.example.tmdt.model.fkProduct.Category;
-
 public class Filter {
     private Double maxPrice;
     private Double minPrice;

@@ -1,7 +1,7 @@
 package com.example.tmdt.mapper;
 
 import com.example.tmdt.dto.ImageDTO;
-import com.example.tmdt.model.fkProduct.Image;
+import com.example.tmdt.model.Image;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "Spring")

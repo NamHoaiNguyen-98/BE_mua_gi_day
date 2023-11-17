@@ -2,7 +2,7 @@ package com.example.tmdt.service.impl;
 
 import com.example.tmdt.dto.BrandDTO;
 import com.example.tmdt.mapper.BrandMapper;
-import com.example.tmdt.model.fkProduct.Brand;
+import com.example.tmdt.model.Brand;
 import com.example.tmdt.repository.BrandRepository;
 import com.example.tmdt.service.IBrandService;
 import org.springframework.beans.factory.annotation.Autowired;

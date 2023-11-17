@@ -1,18 +1,16 @@
 package com.example.tmdt.service.impl;
 
-import com.example.tmdt.dto.BillDTO;
 import com.example.tmdt.dto.BillDetailDTO;
 import com.example.tmdt.dto.CartDetailDTO;
 import com.example.tmdt.mapper.BillDetailMapper;
 import com.example.tmdt.mapper.BillMapper;
 import com.example.tmdt.mapper.CartDetailMapper;
-import com.example.tmdt.mapper.ProductMapper;
 import com.example.tmdt.model.Product;
 import com.example.tmdt.model.User;
-import com.example.tmdt.model.buyPrd.Bill;
-import com.example.tmdt.model.buyPrd.BillDetail;
-import com.example.tmdt.model.buyPrd.CartDetail;
-import com.example.tmdt.model.fkProduct.Shop;
+import com.example.tmdt.model.Bill;
+import com.example.tmdt.model.BillDetail;
+import com.example.tmdt.model.CartDetail;
+import com.example.tmdt.model.Shop;
 import com.example.tmdt.repository.*;
 import com.example.tmdt.service.IBillDetailService;
 import org.springframework.beans.factory.annotation.Autowired;

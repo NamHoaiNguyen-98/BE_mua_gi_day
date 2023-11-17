@@ -1,7 +1,7 @@
 package com.example.tmdt.service;
 
 import com.example.tmdt.dto.BillDTO;
-import com.example.tmdt.model.buyPrd.BillDetail;
+import com.example.tmdt.model.BillDetail;
 
 import java.util.List;
 

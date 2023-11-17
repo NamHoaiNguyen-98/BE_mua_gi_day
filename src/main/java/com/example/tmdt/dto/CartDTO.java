@@ -1,12 +1,10 @@
 package com.example.tmdt.dto;
 
-import com.example.tmdt.security.model.Account;
+import com.example.tmdt.model.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @EqualsAndHashCode(callSuper = false)
 @Data

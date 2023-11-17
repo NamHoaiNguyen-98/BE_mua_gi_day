@@ -1,7 +1,7 @@
 package com.example.tmdt.mapper;
 
 import com.example.tmdt.dto.BillDetailDTO;
-import com.example.tmdt.model.buyPrd.BillDetail;
+import com.example.tmdt.model.BillDetail;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "Spring")

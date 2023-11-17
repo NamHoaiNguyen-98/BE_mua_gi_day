@@ -1,7 +1,7 @@
 package com.example.tmdt.dto;
 
-import com.example.tmdt.model.fkProduct.Shop;
-import com.example.tmdt.security.model.Account;
+import com.example.tmdt.model.Shop;
+import com.example.tmdt.model.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

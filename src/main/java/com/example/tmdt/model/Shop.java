@@ -1,18 +1,23 @@
-package com.example.tmdt.model.fkProduct;
+package com.example.tmdt.model;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-@Data
 
+@Data
 @Entity
-@Table(name = "Image")
+@Table(name = "Shop")
 @EqualsAndHashCode(callSuper = false)
-public class Image {
+public class Shop extends Person {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    @OneToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+    private String address;
+    @ManyToOne
+    private Wards wards;
 }
-

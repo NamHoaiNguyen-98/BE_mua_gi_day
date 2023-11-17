@@ -2,7 +2,7 @@ package com.example.tmdt.service.impl;
 
 import com.example.tmdt.dto.CategoryDTO;
 import com.example.tmdt.mapper.CategoryMapper;
-import com.example.tmdt.model.fkProduct.Category;
+import com.example.tmdt.model.Category;
 import com.example.tmdt.repository.CategoryRepository;
 import com.example.tmdt.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

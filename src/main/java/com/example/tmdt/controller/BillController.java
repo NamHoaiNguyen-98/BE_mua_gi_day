@@ -2,7 +2,7 @@ package com.example.tmdt.controller;
 
 
 import com.example.tmdt.dto.CartDetailDTO;
-import com.example.tmdt.model.buyPrd.BillDetail;
+import com.example.tmdt.model.BillDetail;
 import com.example.tmdt.dto.BillDetailDTO;
 import com.example.tmdt.service.IBillDetailService;
 import com.example.tmdt.service.IBillService;

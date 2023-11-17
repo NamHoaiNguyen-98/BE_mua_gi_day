@@ -1,7 +1,7 @@
 package com.example.tmdt.security.service;
 
 
-import com.example.tmdt.security.model.Account;
+import com.example.tmdt.model.Account;
 
 public interface IAccountService {
     Account findByUsername(String username);

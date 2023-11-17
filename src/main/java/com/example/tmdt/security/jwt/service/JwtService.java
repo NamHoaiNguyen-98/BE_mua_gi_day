@@ -1,5 +1,5 @@
 package com.example.tmdt.security.jwt.service;
-import com.example.tmdt.security.model.AccountPrinciple;
+import com.example.tmdt.model.AccountPrinciple;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

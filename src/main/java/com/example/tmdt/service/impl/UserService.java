@@ -3,7 +3,7 @@ import com.example.tmdt.dto.UserDTO;
 import com.example.tmdt.mapper.UserMapper;
 import com.example.tmdt.model.User;
 import com.example.tmdt.repository.UserRepository;
-import com.example.tmdt.security.model.Account;
+import com.example.tmdt.model.Account;
 import com.example.tmdt.security.repository.IAccountRepository;
 import com.example.tmdt.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;

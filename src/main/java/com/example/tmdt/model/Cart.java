@@ -1,22 +1,22 @@
-package com.example.tmdt.model.buyPrd;
-import com.example.tmdt.model.Product;
+package com.example.tmdt.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 @Data
 @Entity
-@Table(name = "BillDetail")
+@Table(name = "Cart")
 @EqualsAndHashCode(callSuper = false)
-public class BillDetail {
+public class Cart{
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double quantity ;
-    private Double price ;
-    private Double total ;
+    private String confirm;
+    private String reason;
     @ManyToOne
-    private Product product ;
+    private Account account ;
     @ManyToOne
-    private Bill bill ;
+    private User user ;
+
 }
+
