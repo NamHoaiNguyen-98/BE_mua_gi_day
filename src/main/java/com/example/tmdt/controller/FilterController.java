@@ -21,4 +21,8 @@ public class FilterController {
     ResponseEntity<List<Product>> filter(@RequestBody Filter filter) {
         return new ResponseEntity<>(filterService.searchFilter(filter), HttpStatus.OK);
     }
+//    @PostMapping("/for/shop")
+//    ResponseEntity<List<Product>> filterForShop(@RequestBody Filter filter) {
+//        return new ResponseEntity<>(filterService.searchFilterForShop(filter), HttpStatus.OK);
+//    }
 }

@@ -29,4 +29,19 @@ public class FilterService implements IFilterService {
         }
         return null;
     }
+
+//    @Override
+//    public List<Product> searchFilterForShop(Filter filter) {
+//        try {
+//            return filterRepository.searchFilterForShop(
+//                    filter.getCategory().getId(),
+//                    filter.getBrand().getId(),
+//                    filter.getMaxPrice(),
+//                    filter.getMinPrice()
+//            );
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 }

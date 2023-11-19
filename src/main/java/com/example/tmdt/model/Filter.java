@@ -25,6 +25,13 @@ public class Filter {
         this.city = city;
     }
 
+    public Filter(Double maxPrice, Double minPrice, Category category, Brand brand) {
+        this.maxPrice = maxPrice;
+        this.minPrice = minPrice;
+        this.category = category;
+        this.brand = brand;
+    }
+
     public Double getMaxPrice() {
         return maxPrice;
     }

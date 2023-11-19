@@ -18,6 +18,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "WHERE product.status IS NULL ",nativeQuery = true)
     List<Product> findAllStatus();
     List<Product> findAllByNameContainingAndStatusIsNull (String name);
-
+    @Query(value = "select * from product where product.shop_id = ? order by product.count desc limit 5", nativeQuery = true)
+    List<Product> findByCount(Long id);
 
 }
