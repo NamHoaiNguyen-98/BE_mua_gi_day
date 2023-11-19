@@ -11,9 +11,9 @@ import java.util.Optional;
 
 @Repository
 public interface BillRepository extends JpaRepository<Bill, Long> {
-    @Query(value = "SELECT * FROM bill WHERE account_id = :idAccount AND shop_id = :idShop limit 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM bill WHERE account_id = :idAccount AND shop_id = :idShop ORDER BY id DESC LIMIT 1", nativeQuery = true)
     Optional<Bill> findBillByIdAccount(@Param("idAccount") Long idAccount,
-                                       @Param("idShop") Long idShop);
+                                           @Param("idShop") Long idShop);
 
     @Query(value = "SELECT * FROM bill WHERE  shop_id = :idShop", nativeQuery = true)
     List<Bill> findBillByShop(@Param("idShop") Long idShop);
