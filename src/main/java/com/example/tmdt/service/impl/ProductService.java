@@ -24,10 +24,11 @@ public class ProductService implements IProductService {
         productMapper.toDto(productRepository.save(product));
     }
 
+
     @Override
     public void delete(Long id) {
         Optional<Product> optionalProduct = productRepository.findById(id);
-        if(optionalProduct.isPresent()) {
+        if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
             product.setStatus(1);
             productRepository.save(product);
@@ -37,10 +38,11 @@ public class ProductService implements IProductService {
     @Override
     public ProductDTO findOne(Long id) {
         Optional<Product> optionalProduct = productRepository.findById(id);
-        if(optionalProduct.isPresent()) {
+        if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
             return productMapper.toDto(product);
-        } return null;
+        }
+        return null;
     }
 
     @Override
@@ -61,8 +63,13 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public List<ProductDTO> findByCount(Long id) {
+        return productMapper.toDto(productRepository.findByCount(id));
+    }
+
+    @Override
     public List<ProductDTO> searchByName(String name) {
-        return productMapper.toDto( productRepository.findAllByNameContainingAndStatusIsNull(name));
+        return productMapper.toDto(productRepository.findAllByNameContainingAndStatusIsNull(name));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.tmdt.service.impl;
 
 import com.example.tmdt.model.Filter;
+import com.example.tmdt.model.FilterForShop;
 import com.example.tmdt.model.Product;
 import com.example.tmdt.repository.FilterRepository;
 import com.example.tmdt.service.IFilterService;
@@ -23,6 +24,22 @@ public class FilterService implements IFilterService {
                     filter.getWards().getId(),
                     filter.getDistrict().getId(),
                     filter.getCity().getId()
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Product> searchFilterForShop(FilterForShop filter) {
+        try {
+            return filterRepository.searchFilterForShop(
+                    filter.getShop().getId(),
+                    filter.getCategory().getId(),
+                    filter.getBrand().getId(),
+                    filter.getMaxPrice(),
+                    filter.getMinPrice()
             );
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package com.example.tmdt.controller;
 
 
+import com.example.tmdt.dto.BillDTO;
 import com.example.tmdt.dto.CartDetailDTO;
 import com.example.tmdt.model.buyPrd.BillDetail;
 import com.example.tmdt.dto.BillDetailDTO;
@@ -62,5 +63,19 @@ public class BillController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-
+    @DeleteMapping("/{idBill}")
+    ResponseEntity<?> cancelBill(@PathVariable("idBill") Long idBill) {
+        billService.delete(idBill);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PostMapping("/cancel")
+    public ResponseEntity<?> cancelBillByReason (@RequestParam Long idBill, @RequestParam("reason") String reason) {
+        billService.cancelBillByReason(idBill ,reason);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+    @PostMapping("/receive")
+    public ResponseEntity<?> rejection (@RequestParam Long idBill) {
+        billService.receive(idBill);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }
