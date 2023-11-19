@@ -9,5 +9,6 @@ public interface IProductService extends BaseService<ProductDTO>{
     List<ProductDTO> findAllByShop_Id(Long id);
     List<ProductDTO> findAllStatus () ;
     List<ProductDTO> searchByName (String name) ;
+    List<ProductDTO> findByCount(Long id);
 
 }
