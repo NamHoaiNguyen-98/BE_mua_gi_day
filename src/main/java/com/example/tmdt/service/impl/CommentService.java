@@ -2,7 +2,7 @@ package com.example.tmdt.service.impl;
 
 import com.example.tmdt.dto.CommentDTO;
 import com.example.tmdt.mapper.CommentMapper;
-import com.example.tmdt.model.fkProduct.Comment;
+import com.example.tmdt.model.Comment;
 import com.example.tmdt.repository.CommentRepository;
 import com.example.tmdt.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +47,14 @@ public class CommentService implements ICommentService {
     public List<CommentDTO> findAll() {
         List<Comment> comments = commentRepository.findAll();
         return commentMapper.toDto(comments);
+    }
+
+    @Override
+    public List<CommentDTO> findByIdProduct(Long id) {
+        List<Comment> comments = commentRepository.findAllByProduct_Id(id);
+        if (comments != null){
+            return commentMapper.toDto(comments);
+        }
+        return null;
     }
 }

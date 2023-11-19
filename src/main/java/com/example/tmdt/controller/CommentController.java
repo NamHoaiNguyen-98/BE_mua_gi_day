@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
     @Autowired
     private ICommentService commentService;
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<?> findAllComment(){
         return new ResponseEntity<>(commentService.findAll(), HttpStatus.OK);
     }
@@ -24,7 +24,7 @@ public class CommentController {
             return  new ResponseEntity<>(commentDTO,HttpStatus.OK);
         } return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    @PostMapping("/")
+    @PostMapping()
     public ResponseEntity<?> saveComment(@RequestBody CommentDTO commentDTO){
         commentService.save(commentDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -34,5 +34,8 @@ public class CommentController {
         commentService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @GetMapping("/product/{id}")
+    public ResponseEntity<?> showCommentByProductId(@PathVariable Long id){
+        return new ResponseEntity<>(commentService.findByIdProduct(id),HttpStatus.OK);
+    }
 }

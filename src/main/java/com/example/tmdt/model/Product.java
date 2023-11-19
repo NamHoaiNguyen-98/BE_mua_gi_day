@@ -33,8 +33,8 @@ public class Product {
     private Integer count;
     @Column(nullable = true)
     private Integer status;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Comment> comment;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<Comment> comment;
     @ManyToOne
     private Brand brand;
     @ManyToOne

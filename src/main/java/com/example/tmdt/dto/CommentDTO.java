@@ -1,10 +1,13 @@
 package com.example.tmdt.dto;
 
+import com.example.tmdt.model.Product;
 import com.example.tmdt.security.model.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 
 @EqualsAndHashCode(callSuper = false)
@@ -13,10 +16,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CommentDTO {
     private Long id;
-    private String commentUser;
-    private String commentShop;
+    private String content;
     private String status;
-    private Account account ;
+    private LocalDate createAt;
+    private Product product;
+    private Account account;
 }
 
 

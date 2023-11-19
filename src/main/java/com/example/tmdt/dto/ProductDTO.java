@@ -20,7 +20,7 @@ public class ProductDTO {
     private Double promotion;
     private Integer count;
     private Integer status;
-    private List<Comment> comment;
+//    private List<Comment> comment;
     private Brand brand;
     private Shop shop;
     private OptionProduct option;
