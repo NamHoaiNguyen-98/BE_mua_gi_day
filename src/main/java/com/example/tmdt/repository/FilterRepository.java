@@ -28,8 +28,8 @@ public interface FilterRepository extends JpaRepository<Product, Long> {
             "and (p.status is null) " +
             "order by count desc",
             nativeQuery = true)
-    List<Product> searchFilter(@Param("brand_id") Long brand_id,
-                               @Param("category_id") Long category_id,
+    List<Product> searchFilter(@Param("category_id") Long category_id,
+                               @Param("brand_id") Long brand_id,
                                @Param("maxPrice") Double maxPrice,
                                @Param("minPrice") Double minPrice,
                                @Param("wards_id") Long wards_id,
@@ -50,8 +50,8 @@ public interface FilterRepository extends JpaRepository<Product, Long> {
             "order by count desc",
             nativeQuery = true)
     List<Product> searchFilterForShop(@Param("shop_id") Long shop_id,
-                                      @Param("brand_id") Long brand_id,
                                       @Param("category_id") Long category_id,
+                                      @Param("brand_id") Long brand_id,
                                       @Param("maxPrice") Double maxPrice,
                                       @Param("minPrice") Double minPrice);
 
