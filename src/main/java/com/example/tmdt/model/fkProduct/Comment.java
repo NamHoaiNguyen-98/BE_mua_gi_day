@@ -12,7 +12,9 @@ public class Comment {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String commentUser;
+    private String commentShop;
+    private String status;
     @ManyToOne
     private Account account ;
 }

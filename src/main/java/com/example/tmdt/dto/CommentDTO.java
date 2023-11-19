@@ -13,7 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CommentDTO {
     private Long id;
-    private String name;
+    private String commentUser;
+    private String commentShop;
+    private String status;
     private Account account ;
 }
 
