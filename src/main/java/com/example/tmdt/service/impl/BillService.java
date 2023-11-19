@@ -15,6 +15,7 @@ import com.example.tmdt.service.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,12 @@ public class BillService implements IBillService {
 
     @Override
     public void delete(Long id) {
-
+        Optional<Bill> billOptional = billRepository.findById(id);
+        if (billOptional.isPresent()) {
+            Bill bill = billOptional.get();
+            bill.setStatus("Đơn hủy");
+            billRepository.save(bill);
+        }
     }
 
     @Override
@@ -86,6 +92,27 @@ public class BillService implements IBillService {
             Product product = id.getProduct();
             product.setQuantity((int) (product.getQuantity() + id.getQuantity()));
             productRepository.save(product);
+        }
+    }
+
+    @Override
+    public void cancelBillByReason(Long idBill, String reason) {
+       Optional<Bill> billOptional = billRepository.findById(idBill);
+       if (billOptional.isPresent()) {
+           Bill bill = billOptional.get();
+           bill.setReason(reason);
+           billRepository.save(bill);
+       }
+    }
+
+    @Override
+    public void receive(Long idBill) {
+        Optional<Bill> billOptional = billRepository.findById(idBill);
+        if (billOptional.isPresent()) {
+            Bill bill = billOptional.get();
+            bill.setStatus("Đã giao");
+            bill.setDate(LocalDate.now());
+            billRepository.save(bill);
         }
     }
 
