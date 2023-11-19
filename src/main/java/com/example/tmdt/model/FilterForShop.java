@@ -1,30 +1,23 @@
 package com.example.tmdt.model;
 
-import com.example.tmdt.model.address.City;
-import com.example.tmdt.model.address.District;
-import com.example.tmdt.model.address.Wards;
 import com.example.tmdt.model.fkProduct.Brand;
 import com.example.tmdt.model.fkProduct.Category;
+import com.example.tmdt.model.fkProduct.Shop;
 
-public class Filter {
+public class FilterForShop {
     private Double maxPrice;
     private Double minPrice;
     private Category category;
     private Brand brand;
-    private Wards wards;
-    private District district;
-    private City city;
+    private Shop shop;
 
-    public Filter(Double maxPrice, Double minPrice, Category category, Brand brand, Wards wards, District district, City city) {
+    public FilterForShop(Double maxPrice, Double minPrice, Category category, Brand brand, Shop shop) {
         this.maxPrice = maxPrice;
         this.minPrice = minPrice;
         this.category = category;
         this.brand = brand;
-        this.wards = wards;
-        this.district = district;
-        this.city = city;
+        this.shop = shop;
     }
-
 
     public Double getMaxPrice() {
         return maxPrice;
@@ -50,35 +43,19 @@ public class Filter {
         this.category = category;
     }
 
-    public Wards getWards() {
-        return wards;
-    }
-
-    public void setWards(Wards wards) {
-        this.wards = wards;
-    }
-
-    public District getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(District district) {
-        this.district = district;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
     public Brand getBrand() {
         return brand;
     }
 
     public void setBrand(Brand brand) {
         this.brand = brand;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 }
