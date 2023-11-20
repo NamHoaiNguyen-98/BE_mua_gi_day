@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -17,7 +18,8 @@ public class Comment {
     private Long id;
     private String content;
     private String status;
-    private LocalDate createAt;
+    private LocalDateTime createAt;
+    private String reply;
     @ManyToOne
     private Product product;
     @ManyToOne

@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @EqualsAndHashCode(callSuper = false)
@@ -18,7 +19,8 @@ public class CommentDTO {
     private Long id;
     private String content;
     private String status;
-    private LocalDate createAt;
+    private LocalDateTime createAt;
+    private String reply;
     private Product product;
     private Account account;
 }
