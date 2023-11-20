@@ -1,6 +1,5 @@
 package com.example.tmdt.service.impl;
 
-import com.example.tmdt.dto.BillDTO;
 import com.example.tmdt.dto.BillDetailDTO;
 import com.example.tmdt.dto.CartDetailDTO;
 import com.example.tmdt.mapper.BillDetailMapper;
@@ -68,7 +67,7 @@ public class BillDetailService implements IBillDetailService {
 
     @Override
     public void addToBill(List<CartDetailDTO> cartDetailDTOS, Long idAccount) {
-      List<CartDetail> cartDetails = cartDetailMapper.toEntity(cartDetailDTOS);
+        List<CartDetail> cartDetails = cartDetailMapper.toEntity(cartDetailDTOS);
         for (CartDetail cartDetail : cartDetails) {
             createBillDetail(cartDetail, idAccount);
         }
@@ -117,8 +116,8 @@ public class BillDetailService implements IBillDetailService {
         Shop shop = shopRepository.findShopByIdAccount(idShop);
         try {
             return billDetailMapper.toDto(billDetailRepository.findAllByProduct_Shop_Id(shop.getId()));
-        }catch (Exception e) {
-            return new ArrayList<>() ;
+        } catch (Exception e) {
+            return new ArrayList<>();
         }
     }
 
@@ -136,27 +135,21 @@ public class BillDetailService implements IBillDetailService {
     }
 
 
-
-
     private void createBillDetail(CartDetail cartDetail, Long idAccount) {
         User user = userRepository.findUserByAccount_Id(idAccount);
-        Optional<Bill> billOptional = billRepository.findBillByIdAccount(cartDetail.getCart().getAccount().getId(), cartDetail.getProduct().getShop().getId());
-        Bill bill;
+//        Optional<Bill> billOptional = billRepository.findBillByIdAccount(cartDetail.getCart().getAccount().getId(), cartDetail.getProduct().getShop().getId());
+//        Bill bill;
         if (user.getAddress() != null && user.getPhone() != null) {
-            if (billOptional.isPresent() && billOptional.get().getStatus().equals("Chờ xác nhận")) {
-                bill = billOptional.get();
-            } else {
-                bill = new Bill();
-                bill.setAccount(cartDetail.getCart().getAccount());
-                bill.setShop(cartDetail.getProduct().getShop());
-                bill.setName(user.getName());
-                bill.setPhone(user.getPhone());
-                bill.setAddress(user.getAddress());
-                bill.setWards(user.getWards());
-                bill.setDate(LocalDate.now());
-                bill.setStatus("Chờ xác nhận");
-                billRepository.save(bill);
-            }
+            Bill bill = new Bill();
+            bill.setAccount(cartDetail.getCart().getAccount());
+            bill.setShop(cartDetail.getProduct().getShop());
+            bill.setName(user.getName());
+            bill.setPhone(user.getPhone());
+            bill.setAddress(user.getAddress());
+            bill.setWards(user.getWards());
+            bill.setDate(LocalDate.now());
+            bill.setStatus("Chờ xác nhận");
+            billRepository.save(bill);
             BillDetail billDetail = new BillDetail();
             billDetail.setBill(bill);
             billDetail.setProduct(cartDetail.getProduct());
@@ -167,7 +160,7 @@ public class BillDetailService implements IBillDetailService {
             billDetail.setTotal(total);
             Double quantity = cartDetail.getQuantity();
             Product product = cartDetail.getProduct();
-            if (quantity <= product.getQuantity()) {
+            if (quantity <= product.getQuantity() && quantity >= 1) {
                 productRepository.save(product);
                 billDetailRepository.save(billDetail);
             }
