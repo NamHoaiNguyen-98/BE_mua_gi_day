@@ -1,21 +1,12 @@
 package com.example.tmdt.repository;
-
-import com.example.tmdt.model.buyPrd.Bill;
 import com.example.tmdt.model.buyPrd.BillDetail;
-import com.example.tmdt.model.buyPrd.CartDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.Optional;
 
-import java.util.List;
+
 
 @Repository
 public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
@@ -33,5 +24,8 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
     @Query(value = "SELECT * FROM bill_detail bd JOIN bill on bill_id = bill.id WHERE account_id = :idAccount AND bill.status = :status", nativeQuery = true)
     List<BillDetail> showBillByAccountAndStatus(@Param("idAccount") Long idAccount,
                                                 @Param("status") String status);
+
+    @Query(value = "SELECT * FROM bill_detail WHERE bill_detail.bill_id = :idBill", nativeQuery = true)
+    List<BillDetail> listBillDetailByBill(@Param("idBill") Long idBill);
 
 }

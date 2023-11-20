@@ -40,12 +40,8 @@ public class BillController {
                                                  @Param("status") String status) {
 
     List<BillDetailDTO> billDetailDTOS = billDetailService.showBillByAccountAndStatus(idAccount, status);
-
     return new ResponseEntity<>(billDetailDTOS, HttpStatus.OK);
-
-
     }
-
     @PostMapping("/save/bill")
     ResponseEntity<?> saveToBill(@RequestBody List<CartDetailDTO> cartDetailDTOS,
             @Param("idAccount") Long idAccount) {
