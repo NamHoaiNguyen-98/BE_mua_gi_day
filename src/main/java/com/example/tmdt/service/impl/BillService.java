@@ -2,19 +2,18 @@ package com.example.tmdt.service.impl;
 
 import com.example.tmdt.dto.BillDTO;
 import com.example.tmdt.mapper.BillMapper;
+import com.example.tmdt.model.Notification;
 import com.example.tmdt.model.Product;
 import com.example.tmdt.model.buyPrd.Bill;
 import com.example.tmdt.model.buyPrd.BillDetail;
 import com.example.tmdt.model.fkProduct.Shop;
-import com.example.tmdt.repository.BillDetailRepository;
-import com.example.tmdt.repository.BillRepository;
-import com.example.tmdt.repository.ProductRepository;
-import com.example.tmdt.repository.ShopRepository;
+import com.example.tmdt.repository.*;
 import com.example.tmdt.service.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +30,8 @@ public class BillService implements IBillService {
     private ProductRepository  productRepository ;
     @Autowired
     private BillDetailRepository billDetailRepository ;
+    @Autowired
+    private NotificationRepository notificationRepository ;
     @Override
     public void save(BillDTO dto) {
         Bill bill = billMapper.toEntity(dto);
@@ -70,6 +71,15 @@ public class BillService implements IBillService {
         Bill dto = billRepository.findById(billDetails.get(0).getBill().getId()).get();
         dto.setStatus("Đang giao");
         billRepository.save(dto);
+        Notification notification = new Notification() ;
+        notification.setBill(dto);
+        notification.setTitle("Thông báo user");
+        notification.setContent("Đơn hàng được xác nhận");
+        notification.setAvatar(dto.getShop().getAvatar());
+        notification.setCreateAt(LocalDateTime.now());
+        notification.setShop(billDetails.get(0).getProduct().getShop());
+        notification.setAccount(dto.getAccount());
+        notificationRepository.save(notification) ;
         for (BillDetail id:
              billDetails ) {
            Product product = id.getProduct();
@@ -84,6 +94,15 @@ public class BillService implements IBillService {
         dto.setStatus("Đơn hủy");
         dto.setReason(reason);
         billRepository.save(dto);
+        Notification notification = new Notification() ;
+        notification.setBill(dto);
+        notification.setTitle("Thông báo user");
+        notification.setContent("Đơn hàng bị từ chối");
+        notification.setAvatar(dto.getShop().getAvatar());
+        notification.setCreateAt(LocalDateTime.now());
+        notification.setShop(dto.getShop());
+        notification.setAccount(dto.getAccount());
+        notificationRepository.save(notification) ;
         for (BillDetail id:
                 billDetails ) {
             Product product = id.getProduct();
@@ -97,10 +116,19 @@ public class BillService implements IBillService {
        Optional<Bill> billOptional = billRepository.findById(idBill);
        if (billOptional.isPresent()) {
            Bill bill = billOptional.get();
-           bill.setStatus("Đơn hủy");
+           bill.setStatus("Đơn bị hủy");
            bill.setDate(LocalDate.now());
            bill.setReason(reason);
            billRepository.save(bill);
+           Notification notification = new Notification() ;
+           notification.setBill(bill);
+           notification.setTitle("Thông báo shop");
+           notification.setContent("Đơn hàng bị hủy");
+           notification.setAvatar(bill.getShop().getAvatar());
+           notification.setCreateAt(LocalDateTime.now());
+           notification.setShop(bill.getShop());
+           notification.setAccount(bill.getAccount());
+           notificationRepository.save(notification) ;
            List<BillDetail> billDetails = billDetailRepository.listBillDetailByBill(idBill);
            for (BillDetail billDetail : billDetails) {
                billDetail.getProduct().setQuantity((int) (billDetail.getProduct().getQuantity() + billDetail.getQuantity()));
@@ -118,6 +146,15 @@ public class BillService implements IBillService {
             bill.setStatus("Đã giao");
             bill.setDate(LocalDate.now());
             billRepository.save(bill);
+            Notification notification = new Notification() ;
+            notification.setBill(bill);
+            notification.setTitle("Thông báo shop");
+            notification.setContent("Đơn hàng đã được giao");
+            notification.setAvatar(bill.getShop().getAvatar());
+            notification.setCreateAt(LocalDateTime.now());
+            notification.setShop(bill.getShop());
+            notification.setAccount(bill.getAccount());
+            notificationRepository.save(notification) ;
            List<BillDetail> billDetails = billDetailRepository.listBillDetailByBill(idBill);
            for (BillDetail billDetail : billDetails) {
                billDetail.getProduct().setCount(billDetail.getQuantity());

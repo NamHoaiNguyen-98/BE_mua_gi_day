@@ -6,6 +6,7 @@ import com.example.tmdt.mapper.BillDetailMapper;
 import com.example.tmdt.mapper.BillMapper;
 import com.example.tmdt.mapper.CartDetailMapper;
 import com.example.tmdt.mapper.ProductMapper;
+import com.example.tmdt.model.Notification;
 import com.example.tmdt.model.Product;
 import com.example.tmdt.model.User;
 import com.example.tmdt.model.buyPrd.Bill;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -42,6 +44,8 @@ public class BillDetailService implements IBillDetailService {
     private UserRepository userRepository;
     @Autowired
     private CartDetailMapper cartDetailMapper;
+    @Autowired
+    private NotificationRepository notificationRepository ;
 
 
     @Override
@@ -165,7 +169,15 @@ public class BillDetailService implements IBillDetailService {
                 billDetailRepository.save(billDetail);
             }
             cartDetailRepository.deleteCartDetailByProduct(product.getId());
-
+            Notification notification = new Notification() ;
+            notification.setBill(bill);
+            notification.setTitle("Thông báo shop");
+            notification.setContent("Đơn hàng đã được đặt");
+            notification.setAvatar(bill.getShop().getAvatar());
+            notification.setCreateAt(LocalDateTime.now());
+            notification.setShop(cartDetail.getProduct().getShop());
+            notification.setAccount(bill.getAccount());
+            notificationRepository.save(notification) ;
         }
     }
 
