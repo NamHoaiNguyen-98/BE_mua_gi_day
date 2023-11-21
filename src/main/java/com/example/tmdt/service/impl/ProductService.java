@@ -77,4 +77,10 @@ public class ProductService implements IProductService {
         List<Product> products = productRepository.findAllByShop_Id(id);
         return productMapper.toDto(products);
     }
+
+    @Override
+    public List<ProductDTO> findByCategory(Long id) {
+        List<Product> products = productRepository.findByCategory(id);
+        return productMapper.toDto(products);
+    }
 }
