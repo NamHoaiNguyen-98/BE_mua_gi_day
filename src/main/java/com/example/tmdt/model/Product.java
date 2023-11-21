@@ -1,11 +1,8 @@
 package com.example.tmdt.model;
-
 import com.example.tmdt.model.fkProduct.*;
 import com.example.tmdt.security.model.Account;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.data.annotation.CreatedDate;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.util.List;
