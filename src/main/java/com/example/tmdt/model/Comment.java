@@ -24,5 +24,7 @@ public class Comment {
     private Product product;
     @ManyToOne
     private Account account ;
+    @ManyToOne
+    private User user;
 
 }
