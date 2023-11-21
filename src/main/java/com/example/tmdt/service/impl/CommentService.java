@@ -4,8 +4,10 @@ import com.example.tmdt.dto.CommentDTO;
 import com.example.tmdt.dto.UserDTO;
 import com.example.tmdt.mapper.CommentMapper;
 import com.example.tmdt.model.Comment;
+import com.example.tmdt.model.Notification;
 import com.example.tmdt.model.User;
 import com.example.tmdt.repository.CommentRepository;
+import com.example.tmdt.repository.NotificationRepository;
 import com.example.tmdt.repository.UserRepository;
 import com.example.tmdt.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class CommentService implements ICommentService {
     private CommentRepository commentRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private NotificationRepository notificationRepository ;
     @Override
     public void save(CommentDTO dto) {
         Comment comment = commentMapper.toEntity(dto);
@@ -30,6 +34,23 @@ public class CommentService implements ICommentService {
         comment.setUser(user);
         if (comment.getId() == null) {
             comment.setCreateAt(LocalDateTime.now());
+            Notification notification = new Notification() ;
+            notification.setTitle("Thông báo shop");
+            notification.setContent("Đã đánh giá");
+            notification.setCreateAt(LocalDateTime.now());
+            notification.setShop(dto.getProduct().getShop());
+            notification.setAccount(dto.getAccount());
+            notification.setAvatar(user.getAvatar());
+            notificationRepository.save(notification) ;
+        }else {
+            Notification notification = new Notification() ;
+            notification.setTitle("Thông báo user");
+            notification.setContent("Đã phản hồi đánh giá");
+            notification.setCreateAt(LocalDateTime.now());
+            notification.setShop(dto.getProduct().getShop());
+            notification.setAccount(dto.getAccount());
+            notification.setAvatar(dto.getProduct().getShop().getAvatar());
+            notificationRepository.save(notification) ;
         }
         commentRepository.save(comment);
     }

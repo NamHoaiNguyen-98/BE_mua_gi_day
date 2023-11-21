@@ -5,10 +5,12 @@ import com.example.tmdt.mapper.NotificationMapper;
 import com.example.tmdt.model.Notification;
 import com.example.tmdt.model.fkProduct.Image;
 import com.example.tmdt.repository.NotificationRepository;
+import com.example.tmdt.repository.ShopRepository;
 import com.example.tmdt.service.INotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class NotificationService implements INotificationService {
@@ -16,6 +18,8 @@ public class NotificationService implements INotificationService {
     private NotificationRepository notificationRepository ;
     @Autowired
     private NotificationMapper notificationMapper ;
+    @Autowired
+    private ShopRepository shopRepository ;
     @Override
     public void save(NotificationDTO dto) {
         Notification notification = notificationMapper.toEntity(dto);
@@ -41,11 +45,20 @@ public class NotificationService implements INotificationService {
 
     @Override
     public List<NotificationDTO> notificationShop(Long id) {
-        return notificationMapper.toDto(notificationRepository.findNotificationByShop_Id(id));
+
+        try {
+            return notificationMapper.toDto(notificationRepository.findNotificationByShop(shopRepository.findShopByIdAccount(id).getId()));
+        }catch (Exception e) {
+            return new ArrayList<>() ;
+        }
     }
 
     @Override
     public List<NotificationDTO> notificationUser(Long id) {
-        return notificationMapper.toDto(notificationRepository.findNotificationByAccount_Id(id));
+        try {
+            return notificationMapper.toDto(notificationRepository.findNotificationByAccount(id));
+        }catch (Exception e) {
+            return new ArrayList<>() ;
+        }
     }
 }

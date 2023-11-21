@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface NotificationRepository extends JpaRepository<Notification,Long> {
-    List<Notification> findNotificationByAccount_Id(Long id);
-    List<Notification> findNotificationByShop_Id(Long id);
+    @Query(value = "select * from notification where notification.account_id = :id and notification.title = 'Thông báo user' ", nativeQuery = true)
+    List<Notification> findNotificationByAccount(Long id);
+    @Query(value = "select * from notification where notification.shop_id = :id and notification.title = 'Thông báo shop' ", nativeQuery = true)
+    List<Notification> findNotificationByShop(Long id);
+
 }
