@@ -67,11 +67,59 @@ public class BillDetailService implements IBillDetailService {
 
     @Override
     public void addToBill(List<CartDetailDTO> cartDetailDTOS, Long idAccount) {
-        List<CartDetail> cartDetails = cartDetailMapper.toEntity(cartDetailDTOS);
-        for (CartDetail cartDetail : cartDetails) {
-            createBillDetail(cartDetail, idAccount);
+        User user = userRepository.findUserByAccount_Id(idAccount);
+        List<Long> ids = new ArrayList<>();
+        ids.add(cartDetailDTOS.get(0).getProduct().getShop().getId());
+        if (user.getAddress() != null && user.getPhone() != null) {
+            List<CartDetail> cartDetails = cartDetailMapper.toEntity(cartDetailDTOS);
+            for (CartDetail cartDetail : cartDetails) {
+                for (Long id : ids) {
+                    if (!cartDetail.getProduct().getShop().getId().equals(id)) {
+                        ids.add(cartDetail.getProduct().getShop().getId());
+                        break;
+                    }
+                }
+            }
+            for (Long id : ids)  {
+                createBillDetail1(cartDetailDTOS, id, user);
+            }
         }
     }
+
+    private void createBillDetail1(List<CartDetailDTO> cartDetailDTOS, Long shopId , User user) {
+        Shop shop = shopRepository.findById(shopId).get();
+        Bill bill = new Bill();
+        bill.setShop(shop);
+        bill.setName(user.getName());
+        bill.setPhone(user.getPhone());
+        bill.setAddress(user.getAddress());
+        bill.setWards(user.getWards());
+        bill.setDate(LocalDate.now());
+        bill.setStatus("Chờ xác nhận");
+        bill.setAccount(cartDetailDTOS.get(0).getCart().getAccount());
+        bill = billRepository.save(bill);
+        for (CartDetailDTO cartDetailDTO : cartDetailDTOS) {
+            if (cartDetailDTO.getProduct().getShop().getId().equals(bill.getShop().getId())) {
+                CartDetail cartDetail = cartDetailMapper.toEntity(cartDetailDTO);
+                BillDetail billDetail = new BillDetail();
+                billDetail.setBill(bill);
+                billDetail.setProduct(cartDetail.getProduct());
+                billDetail.setQuantity(cartDetail.getQuantity());
+                Double newPrice = cartDetail.getProduct().getPrice() - (cartDetail.getProduct().getPrice() * cartDetail.getProduct().getPromotion() / 100);
+                billDetail.setPrice(newPrice);
+                Double total = cartDetail.getQuantity() * newPrice;
+                billDetail.setTotal(total);
+                Double quantity = cartDetail.getQuantity();
+                Product product = cartDetail.getProduct();
+                if (quantity <= product.getQuantity() && quantity >= 1) {
+                    productRepository.save(product);
+                    billDetailRepository.save(billDetail);
+                }
+                cartDetailRepository.deleteCartDetailByProduct(product.getId());
+            }
+        }
+    }
+
 
     @Override
     public List<BillDetailDTO> showBillByAccountAndStatus(Long idAccount, String status) {
@@ -79,32 +127,6 @@ public class BillDetailService implements IBillDetailService {
         return billDetailMapper.toDto(billDetails);
 
     }
-
-//    @Override
-//    public void saveToBill(List<BillDetailDTO> billDetailDTOS, Long idAccount) {
-//
-//        User user = userRepository.findUserByAccount_Id(idAccount);
-//        List<BillDetail> billDetails = billDetailMapper.toEntity(billDetailDTOS);
-//        for (BillDetail billDetail : billDetails) {
-//            Product product = billDetail.getProduct();
-//            product.setQuantity((int) (product.getQuantity() - billDetail.getQuantity()));
-//            cartDetailRepository.deleteCartDetailByProduct(product.getId());
-//            Bill bill = billDetail.getBill();
-//            if (bill.getAddress() == null) {
-//                bill.setName(user.getName());
-//                bill.setPhone(user.getPhone());
-//                bill.setAddress(user.getAddress());
-//                bill.setWards(user.getWards());
-//                bill.setDate(LocalDate.now());
-//                bill.setStatus("Chờ xác nhận");
-//                billRepository.save(bill);
-//
-//            }
-//            billRepository.save(bill);
-//        }
-//
-//
-//    }
 
     @Override
     public List<BillDetailDTO> displayListBuy(Long idShop, String status) {
@@ -133,41 +155,5 @@ public class BillDetailService implements IBillDetailService {
         }
         return cartDetailMapper.toDto(cartDetails);
     }
-
-
-    private void createBillDetail(CartDetail cartDetail, Long idAccount) {
-        User user = userRepository.findUserByAccount_Id(idAccount);
-//        Optional<Bill> billOptional = billRepository.findBillByIdAccount(cartDetail.getCart().getAccount().getId(), cartDetail.getProduct().getShop().getId());
-//        Bill bill;
-        if (user.getAddress() != null && user.getPhone() != null) {
-            Bill bill = new Bill();
-            bill.setAccount(cartDetail.getCart().getAccount());
-            bill.setShop(cartDetail.getProduct().getShop());
-            bill.setName(user.getName());
-            bill.setPhone(user.getPhone());
-            bill.setAddress(user.getAddress());
-            bill.setWards(user.getWards());
-            bill.setDate(LocalDate.now());
-            bill.setStatus("Chờ xác nhận");
-            billRepository.save(bill);
-            BillDetail billDetail = new BillDetail();
-            billDetail.setBill(bill);
-            billDetail.setProduct(cartDetail.getProduct());
-            billDetail.setQuantity(cartDetail.getQuantity());
-            Double newPrice = cartDetail.getProduct().getPrice() - (cartDetail.getProduct().getPrice() * cartDetail.getProduct().getPromotion() / 100);
-            billDetail.setPrice(newPrice);
-            Double total = cartDetail.getQuantity() * newPrice;
-            billDetail.setTotal(total);
-            Double quantity = cartDetail.getQuantity();
-            Product product = cartDetail.getProduct();
-            if (quantity <= product.getQuantity() && quantity >= 1) {
-                productRepository.save(product);
-                billDetailRepository.save(billDetail);
-            }
-            cartDetailRepository.deleteCartDetailByProduct(product.getId());
-
-        }
-    }
-
 
 }
