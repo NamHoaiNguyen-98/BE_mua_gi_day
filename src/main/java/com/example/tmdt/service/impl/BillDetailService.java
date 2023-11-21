@@ -71,11 +71,59 @@ public class BillDetailService implements IBillDetailService {
 
     @Override
     public void addToBill(List<CartDetailDTO> cartDetailDTOS, Long idAccount) {
-        List<CartDetail> cartDetails = cartDetailMapper.toEntity(cartDetailDTOS);
-        for (CartDetail cartDetail : cartDetails) {
-            createBillDetail(cartDetail, idAccount);
+        User user = userRepository.findUserByAccount_Id(idAccount);
+        List<Long> ids = new ArrayList<>();
+        ids.add(cartDetailDTOS.get(0).getProduct().getShop().getId());
+        if (user.getAddress() != null && user.getPhone() != null) {
+            List<CartDetail> cartDetails = cartDetailMapper.toEntity(cartDetailDTOS);
+            for (CartDetail cartDetail : cartDetails) {
+                for (Long id : ids) {
+                    if (!cartDetail.getProduct().getShop().getId().equals(id)) {
+                        ids.add(cartDetail.getProduct().getShop().getId());
+                        break;
+                    }
+                }
+            }
+            for (Long id : ids)  {
+                createBillDetail1(cartDetailDTOS, id, user);
+            }
         }
     }
+
+    private void createBillDetail1(List<CartDetailDTO> cartDetailDTOS, Long shopId , User user) {
+        Shop shop = shopRepository.findById(shopId).get();
+        Bill bill = new Bill();
+        bill.setShop(shop);
+        bill.setName(user.getName());
+        bill.setPhone(user.getPhone());
+        bill.setAddress(user.getAddress());
+        bill.setWards(user.getWards());
+        bill.setDate(LocalDate.now());
+        bill.setStatus("Chờ xác nhận");
+        bill.setAccount(cartDetailDTOS.get(0).getCart().getAccount());
+        bill = billRepository.save(bill);
+        for (CartDetailDTO cartDetailDTO : cartDetailDTOS) {
+            if (cartDetailDTO.getProduct().getShop().getId().equals(bill.getShop().getId())) {
+                CartDetail cartDetail = cartDetailMapper.toEntity(cartDetailDTO);
+                BillDetail billDetail = new BillDetail();
+                billDetail.setBill(bill);
+                billDetail.setProduct(cartDetail.getProduct());
+                billDetail.setQuantity(cartDetail.getQuantity());
+                Double newPrice = cartDetail.getProduct().getPrice() - (cartDetail.getProduct().getPrice() * cartDetail.getProduct().getPromotion() / 100);
+                billDetail.setPrice(newPrice);
+                Double total = cartDetail.getQuantity() * newPrice;
+                billDetail.setTotal(total);
+                Double quantity = cartDetail.getQuantity();
+                Product product = cartDetail.getProduct();
+                if (quantity <= product.getQuantity() && quantity >= 1) {
+                    productRepository.save(product);
+                    billDetailRepository.save(billDetail);
+                }
+                cartDetailRepository.deleteCartDetailByProduct(product.getId());
+            }
+        }
+    }
+
 
     @Override
     public List<BillDetailDTO> showBillByAccountAndStatus(Long idAccount, String status) {
@@ -169,15 +217,7 @@ public class BillDetailService implements IBillDetailService {
                 billDetailRepository.save(billDetail);
             }
             cartDetailRepository.deleteCartDetailByProduct(product.getId());
-            Notification notification = new Notification() ;
-            notification.setBill(bill);
-            notification.setTitle("Thông báo shop");
-            notification.setContent("Đơn hàng đã được đặt");
-            notification.setAvatar(bill.getShop().getAvatar());
-            notification.setCreateAt(LocalDateTime.now());
-            notification.setShop(cartDetail.getProduct().getShop());
-            notification.setAccount(bill.getAccount());
-            notificationRepository.save(notification) ;
+
         }
     }
 
