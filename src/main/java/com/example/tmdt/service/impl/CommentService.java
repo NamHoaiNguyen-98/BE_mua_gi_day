@@ -1,9 +1,12 @@
 package com.example.tmdt.service.impl;
 
 import com.example.tmdt.dto.CommentDTO;
+import com.example.tmdt.dto.UserDTO;
 import com.example.tmdt.mapper.CommentMapper;
 import com.example.tmdt.model.Comment;
+import com.example.tmdt.model.User;
 import com.example.tmdt.repository.CommentRepository;
+import com.example.tmdt.repository.UserRepository;
 import com.example.tmdt.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +21,17 @@ public class CommentService implements ICommentService {
     private CommentMapper commentMapper;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public void save(CommentDTO dto) {
         Comment comment = commentMapper.toEntity(dto);
-        comment.setCreateAt(LocalDateTime.now());
-        commentMapper.toDto(commentRepository.save(comment));
+        User user = userRepository.findUserByAccount_Id(comment.getAccount().getId());
+        comment.setUser(user);
+        if (comment.getId() == null) {
+            comment.setCreateAt(LocalDateTime.now());
+        }
+        commentRepository.save(comment);
     }
 
     @Override

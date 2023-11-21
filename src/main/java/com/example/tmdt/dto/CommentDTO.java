@@ -6,8 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -21,8 +21,9 @@ public class CommentDTO {
     private String status;
     private LocalDateTime createAt;
     private String reply;
-    private Product product;
+    private ProductDTO product;
     private Account account;
+    private UserDTO user;
 }
 
 
