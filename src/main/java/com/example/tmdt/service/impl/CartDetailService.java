@@ -148,8 +148,11 @@ public class  CartDetailService implements ICartDetailService {
 
     @Override
     public void deleteAllProductFromCart(Long idCart) {
-        cartDetailRepository.deleteCart(idCart);
-
+        try {
+            cartDetailRepository.deleteCart(idCart);
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
     }
 
     @Override
