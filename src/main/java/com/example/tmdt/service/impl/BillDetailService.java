@@ -186,40 +186,40 @@ public class BillDetailService implements IBillDetailService {
         return cartDetailMapper.toDto(cartDetails);
     }
 
-
-    private void createBillDetail(CartDetail cartDetail, Long idAccount) {
-        User user = userRepository.findUserByAccount_Id(idAccount);
-//        Optional<Bill> billOptional = billRepository.findBillByIdAccount(cartDetail.getCart().getAccount().getId(), cartDetail.getProduct().getShop().getId());
-//        Bill bill;
-        if (user.getAddress() != null && user.getPhone() != null) {
-            Bill bill = new Bill();
-            bill.setAccount(cartDetail.getCart().getAccount());
-            bill.setShop(cartDetail.getProduct().getShop());
-            bill.setName(user.getName());
-            bill.setPhone(user.getPhone());
-            bill.setAddress(user.getAddress());
-            bill.setWards(user.getWards());
-            bill.setDate(LocalDate.now());
-            bill.setStatus("Chờ xác nhận");
-            billRepository.save(bill);
-            BillDetail billDetail = new BillDetail();
-            billDetail.setBill(bill);
-            billDetail.setProduct(cartDetail.getProduct());
-            billDetail.setQuantity(cartDetail.getQuantity());
-            Double newPrice = cartDetail.getProduct().getPrice() - (cartDetail.getProduct().getPrice() * cartDetail.getProduct().getPromotion() / 100);
-            billDetail.setPrice(newPrice);
-            Double total = cartDetail.getQuantity() * newPrice;
-            billDetail.setTotal(total);
-            Double quantity = cartDetail.getQuantity();
-            Product product = cartDetail.getProduct();
-            if (quantity <= product.getQuantity() && quantity >= 1) {
-                productRepository.save(product);
-                billDetailRepository.save(billDetail);
-            }
-            cartDetailRepository.deleteCartDetailByProduct(product.getId());
-
-        }
-    }
+//
+//    private void createBillDetail(CartDetail cartDetail, Long idAccount) {
+//        User user = userRepository.findUserByAccount_Id(idAccount);
+////        Optional<Bill> billOptional = billRepository.findBillByIdAccount(cartDetail.getCart().getAccount().getId(), cartDetail.getProduct().getShop().getId());
+////        Bill bill;
+//        if (user.getAddress() != null && user.getPhone() != null) {
+//            Bill bill = new Bill();
+//            bill.setAccount(cartDetail.getCart().getAccount());
+//            bill.setShop(cartDetail.getProduct().getShop());
+//            bill.setName(user.getName());
+//            bill.setPhone(user.getPhone());
+//            bill.setAddress(user.getAddress());
+//            bill.setWards(user.getWards());
+//            bill.setDate(LocalDate.now());
+//            bill.setStatus("Chờ xác nhận");
+//            billRepository.save(bill);
+//            BillDetail billDetail = new BillDetail();
+//            billDetail.setBill(bill);
+//            billDetail.setProduct(cartDetail.getProduct());
+//            billDetail.setQuantity(cartDetail.getQuantity());
+//            Double newPrice = cartDetail.getProduct().getPrice() - (cartDetail.getProduct().getPrice() * cartDetail.getProduct().getPromotion() / 100);
+//            billDetail.setPrice(newPrice);
+//            Double total = cartDetail.getQuantity() * newPrice;
+//            billDetail.setTotal(total);
+//            Double quantity = cartDetail.getQuantity();
+//            Product product = cartDetail.getProduct();
+//            if (quantity <= product.getQuantity() && quantity >= 1) {
+//                productRepository.save(product);
+//                billDetailRepository.save(billDetail);
+//            }
+//            cartDetailRepository.deleteCartDetailByProduct(product.getId());
+//
+//        }
+//    }
 
 
 }
