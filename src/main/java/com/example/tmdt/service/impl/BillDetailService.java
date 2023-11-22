@@ -72,9 +72,46 @@ public class BillDetailService implements IBillDetailService {
     @Override
     public void addToBill(List<CartDetailDTO> cartDetailDTOS, Long idAccount) {
         List<CartDetail> cartDetails = cartDetailMapper.toEntity(cartDetailDTOS);
+        User user = userRepository.findUserByAccount_Id(idAccount);
+        if (user.getAddress() != null && user.getPhone() != null) {
+            Bill bill = new Bill();
         for (CartDetail cartDetail : cartDetails) {
-            createBillDetail(cartDetail, idAccount);
+            bill.setAccount(cartDetail.getCart().getAccount());
+            bill.setShop(cartDetail.getProduct().getShop());
+            bill.setName(user.getName());
+            bill.setPhone(user.getPhone());
+            bill.setAddress(user.getAddress());
+            bill.setWards(user.getWards());
+            bill.setDate(LocalDate.now());
+            bill.setStatus("Chờ xác nhận");
+            billRepository.save(bill);
+            BillDetail billDetail = new BillDetail();
+            billDetail.setBill(bill);
+            billDetail.setProduct(cartDetail.getProduct());
+            billDetail.setQuantity(cartDetail.getQuantity());
+            Double newPrice = cartDetail.getProduct().getPrice() - (cartDetail.getProduct().getPrice() * cartDetail.getProduct().getPromotion() / 100);
+            billDetail.setPrice(newPrice);
+            Double total = cartDetail.getQuantity() * newPrice;
+            billDetail.setTotal(total);
+            Double quantity = cartDetail.getQuantity();
+            Product product = cartDetail.getProduct();
+            if (quantity <= product.getQuantity() && quantity >= 1) {
+                productRepository.save(product);
+                billDetailRepository.save(billDetail);
+            }
+            cartDetailRepository.deleteCartDetailByProduct(product.getId());
+            Notification notification = new Notification() ;
+            notification.setBill(bill);
+            notification.setTitle("Thông báo shop");
+            notification.setContent("Đơn hàng đã được đặt");
+            notification.setAvatar(bill.getShop().getAvatar());
+            notification.setCreateAt(LocalDateTime.now());
+            notification.setShop(cartDetail.getProduct().getShop());
+            notification.setAccount(bill.getAccount());
+            notificationRepository.save(notification) ;
         }
+        }
+
     }
 
     @Override
@@ -139,47 +176,47 @@ public class BillDetailService implements IBillDetailService {
     }
 
 
-    private void createBillDetail(CartDetail cartDetail, Long idAccount) {
-        User user = userRepository.findUserByAccount_Id(idAccount);
-//        Optional<Bill> billOptional = billRepository.findBillByIdAccount(cartDetail.getCart().getAccount().getId(), cartDetail.getProduct().getShop().getId());
-//        Bill bill;
-        if (user.getAddress() != null && user.getPhone() != null) {
-            Bill bill = new Bill();
-            bill.setAccount(cartDetail.getCart().getAccount());
-            bill.setShop(cartDetail.getProduct().getShop());
-            bill.setName(user.getName());
-            bill.setPhone(user.getPhone());
-            bill.setAddress(user.getAddress());
-            bill.setWards(user.getWards());
-            bill.setDate(LocalDate.now());
-            bill.setStatus("Chờ xác nhận");
-            billRepository.save(bill);
-            BillDetail billDetail = new BillDetail();
-            billDetail.setBill(bill);
-            billDetail.setProduct(cartDetail.getProduct());
-            billDetail.setQuantity(cartDetail.getQuantity());
-            Double newPrice = cartDetail.getProduct().getPrice() - (cartDetail.getProduct().getPrice() * cartDetail.getProduct().getPromotion() / 100);
-            billDetail.setPrice(newPrice);
-            Double total = cartDetail.getQuantity() * newPrice;
-            billDetail.setTotal(total);
-            Double quantity = cartDetail.getQuantity();
-            Product product = cartDetail.getProduct();
-            if (quantity <= product.getQuantity() && quantity >= 1) {
-                productRepository.save(product);
-                billDetailRepository.save(billDetail);
-            }
-            cartDetailRepository.deleteCartDetailByProduct(product.getId());
-            Notification notification = new Notification() ;
-            notification.setBill(bill);
-            notification.setTitle("Thông báo shop");
-            notification.setContent("Đơn hàng đã được đặt");
-            notification.setAvatar(bill.getShop().getAvatar());
-            notification.setCreateAt(LocalDateTime.now());
-            notification.setShop(cartDetail.getProduct().getShop());
-            notification.setAccount(bill.getAccount());
-            notificationRepository.save(notification) ;
-        }
-    }
+//    private void createBillDetail(CartDetail cartDetail, Long idAccount) {
+//        User user = userRepository.findUserByAccount_Id(idAccount);
+////        Optional<Bill> billOptional = billRepository.findBillByIdAccount(cartDetail.getCart().getAccount().getId(), cartDetail.getProduct().getShop().getId());
+////        Bill bill;
+//        if (user.getAddress() != null && user.getPhone() != null) {
+//            Bill bill = new Bill();
+//            bill.setAccount(cartDetail.getCart().getAccount());
+//            bill.setShop(cartDetail.getProduct().getShop());
+//            bill.setName(user.getName());
+//            bill.setPhone(user.getPhone());
+//            bill.setAddress(user.getAddress());
+//            bill.setWards(user.getWards());
+//            bill.setDate(LocalDate.now());
+//            bill.setStatus("Chờ xác nhận");
+//            billRepository.save(bill);
+//            BillDetail billDetail = new BillDetail();
+//            billDetail.setBill(bill);
+//            billDetail.setProduct(cartDetail.getProduct());
+//            billDetail.setQuantity(cartDetail.getQuantity());
+//            Double newPrice = cartDetail.getProduct().getPrice() - (cartDetail.getProduct().getPrice() * cartDetail.getProduct().getPromotion() / 100);
+//            billDetail.setPrice(newPrice);
+//            Double total = cartDetail.getQuantity() * newPrice;
+//            billDetail.setTotal(total);
+//            Double quantity = cartDetail.getQuantity();
+//            Product product = cartDetail.getProduct();
+//            if (quantity <= product.getQuantity() && quantity >= 1) {
+//                productRepository.save(product);
+//                billDetailRepository.save(billDetail);
+//            }
+//            cartDetailRepository.deleteCartDetailByProduct(product.getId());
+//            Notification notification = new Notification() ;
+//            notification.setBill(bill);
+//            notification.setTitle("Thông báo shop");
+//            notification.setContent("Đơn hàng đã được đặt");
+//            notification.setAvatar(bill.getShop().getAvatar());
+//            notification.setCreateAt(LocalDateTime.now());
+//            notification.setShop(cartDetail.getProduct().getShop());
+//            notification.setAccount(bill.getAccount());
+//            notificationRepository.save(notification) ;
+//        }
+//    }
 
 
 }
