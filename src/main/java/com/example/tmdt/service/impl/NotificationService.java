@@ -45,7 +45,6 @@ public class NotificationService implements INotificationService {
 
     @Override
     public List<NotificationDTO> notificationShop(Long id) {
-
         try {
             return notificationMapper.toDto(notificationRepository.findNotificationByShop(shopRepository.findShopByIdAccount(id).getId()));
         }catch (Exception e) {
@@ -60,5 +59,21 @@ public class NotificationService implements INotificationService {
         }catch (Exception e) {
             return new ArrayList<>() ;
         }
+    }
+
+    @Override
+    public List<NotificationDTO> notiByAcc(Long id) {
+        try {
+            return notificationMapper.toDto(notificationRepository.findNotiByAcc(id,shopRepository.findShopByIdAccount(id).getId()));
+        }catch (Exception e) {
+            return new ArrayList<>() ;
+        }
+    }
+
+    @Override
+    public void changeStatus(Long id) {
+        Notification notification = notificationRepository.findById(id).get() ;
+        notification.setStatus(1L);
+        notificationRepository.save(notification) ;
     }
 }
