@@ -32,6 +32,8 @@ public class BillService implements IBillService {
     private BillDetailRepository billDetailRepository ;
     @Autowired
     private NotificationRepository notificationRepository ;
+    @Autowired
+    private UserRepository userRepository ;
     @Override
     public void save(BillDTO dto) {
         Bill bill = billMapper.toEntity(dto);
@@ -124,7 +126,7 @@ public class BillService implements IBillService {
            notification.setBill(bill);
            notification.setTitle("Thông báo shop");
            notification.setContent("Đơn hàng bị hủy");
-           notification.setAvatar(bill.getShop().getAvatar());
+           notification.setAvatar(userRepository.findUserByAccount_Id(bill.getAccount().getId()).getAvatar());
            notification.setCreateAt(LocalDateTime.now());
            notification.setShop(bill.getShop());
            notification.setAccount(bill.getAccount());
@@ -150,7 +152,7 @@ public class BillService implements IBillService {
             notification.setBill(bill);
             notification.setTitle("Thông báo shop");
             notification.setContent("Đơn hàng đã được giao");
-            notification.setAvatar(bill.getShop().getAvatar());
+            notification.setAvatar(userRepository.findUserByAccount_Id(bill.getAccount().getId()).getAvatar());
             notification.setCreateAt(LocalDateTime.now());
             notification.setShop(bill.getShop());
             notification.setAccount(bill.getAccount());
