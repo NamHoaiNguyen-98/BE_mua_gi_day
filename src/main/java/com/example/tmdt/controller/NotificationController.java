@@ -25,5 +25,17 @@ public class NotificationController {
         List<NotificationDTO> notificationDTOS = notificationService.notificationUser(id);
         return new ResponseEntity<>(notificationDTOS, HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    ResponseEntity<List<NotificationDTO>> findNotificationAcc(@PathVariable Long id ) {
+        List<NotificationDTO> notificationDTOS = notificationService.notiByAcc(id);
+        return new ResponseEntity<>(notificationDTOS, HttpStatus.OK);
+    }
+    @PostMapping("/{id}")
+    ResponseEntity<?> changeStatus(@PathVariable Long id ) {
+        notificationService.changeStatus(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 
 }

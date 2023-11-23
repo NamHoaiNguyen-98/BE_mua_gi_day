@@ -8,4 +8,6 @@ public interface INotificationService extends BaseService <NotificationDTO> {
 
     List<NotificationDTO> notificationShop(Long id);
     List<NotificationDTO> notificationUser(Long id);
+    List<NotificationDTO> notiByAcc(Long id);
+    void changeStatus (Long id) ;
 }

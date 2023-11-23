@@ -102,11 +102,12 @@ public class BillDetailService implements IBillDetailService {
         bill.setStatus("Chờ xác nhận");
         bill.setAccount(cartDetailDTOS.get(0).getCart().getAccount());
         bill = billRepository.save(bill);
+        User user1 = userRepository.findUserByAccount_Id(bill.getAccount().getId());
         Notification notification = new Notification() ;
         notification.setBill(bill);
         notification.setTitle("Thông báo shop");
         notification.setContent("Đơn hàng đã được đặt");
-        notification.setAvatar(bill.getShop().getAvatar());
+        notification.setAvatar(user1.getAvatar());
         notification.setCreateAt(LocalDateTime.now());
         notification.setShop(shop);
         notification.setAccount(bill.getAccount());

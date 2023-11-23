@@ -3,6 +3,7 @@ package com.example.tmdt.service.impl;
 import com.example.tmdt.dto.CommentDTO;
 import com.example.tmdt.dto.UserDTO;
 import com.example.tmdt.mapper.CommentMapper;
+import com.example.tmdt.mapper.ProductMapper;
 import com.example.tmdt.model.Comment;
 import com.example.tmdt.model.Notification;
 import com.example.tmdt.model.User;
@@ -21,6 +22,8 @@ import java.util.Optional;
 public class CommentService implements ICommentService {
     @Autowired
     private CommentMapper commentMapper;
+    @Autowired
+    private ProductMapper productMapper;
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
@@ -41,6 +44,7 @@ public class CommentService implements ICommentService {
             notification.setShop(dto.getProduct().getShop());
             notification.setAccount(dto.getAccount());
             notification.setAvatar(user.getAvatar());
+            notification.setProduct(productMapper.toEntity(dto.getProduct()));
             notificationRepository.save(notification) ;
         }else {
             Notification notification = new Notification() ;
@@ -49,6 +53,7 @@ public class CommentService implements ICommentService {
             notification.setCreateAt(LocalDateTime.now());
             notification.setShop(dto.getProduct().getShop());
             notification.setAccount(dto.getAccount());
+            notification.setProduct(productMapper.toEntity(dto.getProduct()));
             notification.setAvatar(dto.getProduct().getShop().getAvatar());
             notificationRepository.save(notification) ;
         }
