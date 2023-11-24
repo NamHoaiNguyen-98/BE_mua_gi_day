@@ -24,7 +24,7 @@ public class Product {
     @Column(nullable = false)
     @Min(value = 1)
     private Double price;
-    @Min(value = 1)
+    @Min(value = 0)
     private Double promotion;
     @Column(columnDefinition = "integer default 0")
     private Double count;
