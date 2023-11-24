@@ -1,9 +1,9 @@
 package com.example.tmdt.model;
-import com.example.tmdt.model.fkProduct.Shop;
-import com.example.tmdt.security.model.Account;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
+import java.time.LocalDateTime;
+
 @Data
 @Entity
 @Table(name = "Chat")
@@ -14,9 +14,11 @@ public class Chat{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String content;
-    @ManyToOne
-    private Account account ;
-    @ManyToOne
-    private Shop shop ;
+    private String message;
+    private Long senderId ;
+    @Column(nullable = false)
+    private Long receiverId;
+    @Column(nullable = false)
+    private LocalDateTime timestamp;
+    private Status status;
 }
