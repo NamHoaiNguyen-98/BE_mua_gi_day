@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -28,4 +30,16 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
     @Query(value = "SELECT * FROM bill_detail WHERE bill_detail.bill_id = :idBill", nativeQuery = true)
     List<BillDetail> listBillDetailByBill(@Param("idBill") Long idBill);
 
+    @Query(value = "select * from bill_detail bd join bill b on bd.bill_id = b.id " +
+            " where b.status = 'Đã giao' and b.date = :date " +
+            " and b.shop_id = :idShop ", nativeQuery = true)
+    List<BillDetail> totalByDate(@Param("date") LocalDate date,
+                                 @Param("idShop") Long idShop);
+    @Query(value = "select * from bill_detail bd join bill b on bd.bill_id = b.id " +
+            " where b.status = 'Đã giao' " +
+            " and b.date between :date1 and :date2 " +
+            " and b.shop_id = :idShop ", nativeQuery = true)
+    List<BillDetail> totalByWeek(@Param("date1") LocalDate date1,
+                                 @Param("date2") LocalDate date2,
+                                 @Param("idShop") Long idShop);
 }

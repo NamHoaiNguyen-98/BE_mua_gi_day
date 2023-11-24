@@ -171,8 +171,15 @@ public class BillDetailService implements IBillDetailService {
         return cartDetailMapper.toDto(cartDetails);
     }
 
+    @Override
+    public List<BillDetailDTO> totalByDate(LocalDate date, Long idShop) {
+        List<BillDetail> billDetails = billDetailRepository.totalByDate(date,idShop);
+        return billDetailMapper.toDto(billDetails);
+    }
 
-
-
-
+    @Override
+    public List<BillDetailDTO> totalByWeek(LocalDate date1, LocalDate date2, Long idShop) {
+        List<BillDetail> billDetails = billDetailRepository.totalByWeek(date1,date2,idShop);
+        return billDetailMapper.toDto(billDetails);
+    }
 }
