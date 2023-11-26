@@ -5,6 +5,9 @@ import com.example.tmdt.security.model.Account;
 import com.example.tmdt.security.service.IAccountService;
 import com.example.tmdt.service.IMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,23 +23,30 @@ public class MessageController {
     SimpMessagingTemplate template;
     @Autowired
    private IAccountService accountService;
-    //    hàm lấy tất cả list friend đã nhắn tin
-    @GetMapping("/allFriend/{id}")
-    public List<Message> getAllChatFriends(@PathVariable Long id){
-        return messageService.initialStateAllChatFriends(id);
+//    @GetMapping("/allFriend/{fromUserId}/{toUserId}")
+//    public List<Message> getAllChatFriends(@PathVariable Long fromUserId,
+//                                           @PathVariable(required = false) Long toUserId){
+//        if (toUserId ==  null) {
+//            return messageService.initialStateAllChatFriends(fromUserId);
+//        }
+//        return messageService.initialStateAllChatFriends(fromUserId, toUserId);
+//    }
+    @PostMapping("/allFriend")
+    public List<Message> getAllChatFriends(@Param("fromUserId") Long fromUserId,
+                                           @Param("toUserId") Long toUserId){
+        if (toUserId ==  0) {
+            return messageService.initialStateAllChatFriends(fromUserId);
+        }
+        return messageService.initialStateAllChatFriends(fromUserId, toUserId);
     }
 
-    //    http://localhost:8080/message/all/{id}
-//    trong hàm getAllMessages @PathVariable int id sẽ là người bên kia nhắn
-//    và @RequestBody Account principal sẽ là chủ thể của mình đang đăng nhập
     @PostMapping( "/all/{id}")
-    public List<Message> getAllMessages(@PathVariable Long id , @RequestBody Account principal) {
-        String loggedInUsername = principal.getUsername();
-        return messageService.getAllMessages(loggedInUsername, id);
+    public List<Message> getAllMessages(@PathVariable Long id , @RequestBody Account account) {
+        String username = account.getUsername();
+        return messageService.getAllMessages(username, id);
     }
 
-    //    @SendTo("/chat/user/queue/position-update")
-//    @MessageMapping("/chat")
+
     @PostMapping("/chat")
     public void createPrivateChatMessages(@RequestBody Message message) throws Exception {
         if(message != null ) {
@@ -44,10 +54,18 @@ public class MessageController {
             message.setTime(LocalDateTime.now());
             message.setFromUser(account);
             messageService.save(message);
-            template.convertAndSend("/chat/user/queue/position-update", message);
-//            template.convertAndSend("/chat/user/queue/position-update", message);
+            template.convertAndSend("/chat/user/queue", message);
+
             return;
         }
         throw new Exception("Error Create Message !");
     }
+
+//    @PostMapping("/create")
+//    ResponseEntity<?> createNewMessage(@Param("fromUserId") Long fromUserId,
+//                                       @Param("toUserId") Long toUserId) {
+//        messageService.createNewMessage(fromUserId, toUserId);
+//        return new ResponseEntity<>(HttpStatus.CREATED);
+//
+//    }
 }

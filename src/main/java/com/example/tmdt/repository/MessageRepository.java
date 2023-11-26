@@ -1,6 +1,8 @@
 package com.example.tmdt.repository;
 
 import com.example.tmdt.model.Message;
+import com.example.tmdt.model.User;
+import com.example.tmdt.security.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,5 +25,10 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
             "OR  (m.fromUser.id = :secondUserId AND m.toUser.id = :firstUserId)) " +
             "ORDER BY m.time")
     List<Message> findAllMessagesBetweenTwoUsers(@Param("firstUserId") Long firstUserId, @Param("secondUserId") Long secondUserId);
+    @Query(
+            value = "SELECT DISTINCT m.* FROM message m JOIN account a ON a.id = m.from_user_id OR a.id = m.to_user_id WHERE a.id = :toUserId",
+            nativeQuery = true
+    )
+    List<Message> findListAccountInChat(@Param("toUserId") Long toUserId);
 
 }
