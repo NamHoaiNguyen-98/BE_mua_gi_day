@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 @Service
 public class MessageService implements IMessageService {
     @Autowired
@@ -33,6 +34,7 @@ public class MessageService implements IMessageService {
         Account loggedUser = accountRepository.findByUsername(loggedInUsername);
         Account chatUser = accountRepository.findById(chatUserId).get();
         return messageRepository.findAllMessagesBetweenTwoUsers(loggedUser.getId(), chatUser.getId());
+
     }
 
     @Override
@@ -40,8 +42,8 @@ public class MessageService implements IMessageService {
         return messageRepository.save(message);
     }
 
-
-    private void createNewMessage(Long fromUserId, Long toUserId) {
+    @Override
+    public void createNewMessage(Long fromUserId, Long toUserId) {
         List<Message> messages = messageRepository.findListAccountInChat(toUserId);
         boolean check = false;
         for (Message message : messages) {
@@ -60,7 +62,25 @@ public class MessageService implements IMessageService {
             message.setContent("xin chào!");
             messageRepository.save(message);
 
-        }
+//           }
+//        }
 
+        }
     }
 }
+
+
+//    private void createNewMessage(Account accountFrom, Account accountTo) {
+//            Message message = new Message();
+//            message.setFromUser(accountFrom);
+//            message.setToUser(accountTo);
+//            message.setTime(LocalDateTime.now());
+//            message.setContent("xin chào!");
+//            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+//            messageRepository.save(message);
+//
+//
+//        }
+
+
+

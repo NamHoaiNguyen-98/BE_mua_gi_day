@@ -23,28 +23,23 @@ public class MessageController {
     SimpMessagingTemplate template;
     @Autowired
    private IAccountService accountService;
-//    @GetMapping("/allFriend/{fromUserId}/{toUserId}")
-//    public List<Message> getAllChatFriends(@PathVariable Long fromUserId,
-//                                           @PathVariable(required = false) Long toUserId){
-//        if (toUserId ==  null) {
-//            return messageService.initialStateAllChatFriends(fromUserId);
-//        }
+    @GetMapping("/allFriend/{fromUserId}")
+    public List<Message> getAllChatFriends(@PathVariable Long fromUserId) {
+        return messageService.initialStateAllChatFriends(fromUserId);
+    }
+//    @PostMapping("/allFriend")
+//    public List<Message> getAllChatFriends(@Param("fromUserId") Long fromUserId,
+//                                           @Param("toUserId") Long toUserId){
 //        return messageService.initialStateAllChatFriends(fromUserId, toUserId);
 //    }
-    @PostMapping("/allFriend")
-    public List<Message> getAllChatFriends(@Param("fromUserId") Long fromUserId,
-                                           @Param("toUserId") Long toUserId){
-        if (toUserId ==  0) {
-            return messageService.initialStateAllChatFriends(fromUserId);
-        }
-        return messageService.initialStateAllChatFriends(fromUserId, toUserId);
-    }
 
     @PostMapping( "/all/{id}")
     public List<Message> getAllMessages(@PathVariable Long id , @RequestBody Account account) {
         String username = account.getUsername();
         return messageService.getAllMessages(username, id);
     }
+
+
 
 
     @PostMapping("/chat")
@@ -61,11 +56,11 @@ public class MessageController {
         throw new Exception("Error Create Message !");
     }
 
-//    @PostMapping("/create")
-//    ResponseEntity<?> createNewMessage(@Param("fromUserId") Long fromUserId,
-//                                       @Param("toUserId") Long toUserId) {
-//        messageService.createNewMessage(fromUserId, toUserId);
-//        return new ResponseEntity<>(HttpStatus.CREATED);
-//
-//    }
+    @PostMapping("/create")
+    ResponseEntity<?> createNewMessage(@Param("fromUserId") Long fromUserId,
+                                       @Param("toUserId") Long toUserId) {
+        messageService.createNewMessage(fromUserId, toUserId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+
+    }
 }
