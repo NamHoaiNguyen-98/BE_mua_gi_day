@@ -19,32 +19,45 @@ import java.util.List;
 @RequestMapping("/api/billDetails")
 public class BillDetailController {
     @Autowired
-    private IBillDetailService billDetailService ;
+    private IBillDetailService billDetailService;
     @Autowired
-    private IBillService billService ;
+    private IBillService billService;
+
     @GetMapping("/shop/{idAcc}")
-    ResponseEntity<List<BillDetailDTO>> findBillDetail(@PathVariable Long idAcc ) {
+    ResponseEntity<List<BillDetailDTO>> findBillDetail(@PathVariable Long idAcc) {
         List<BillDetailDTO> billDetailDTOS = billDetailService.findByShop(idAcc);
         return new ResponseEntity<>(billDetailDTOS, HttpStatus.OK);
     }
+
     @GetMapping("/shop/bill/{idAcc}")
-    ResponseEntity<List<BillDTO>> findBill(@PathVariable Long idAcc ) {
+    ResponseEntity<List<BillDTO>> findBill(@PathVariable Long idAcc) {
         List<BillDTO> billDTOS = billService.findByShop(idAcc);
         return new ResponseEntity<>(billDTOS, HttpStatus.OK);
     }
+
     @GetMapping("/total/{date}/{idShop}")
     ResponseEntity<List<BillDetailDTO>> totalByDate(@PathVariable String date,
                                                     @PathVariable Long idShop) {
-        List<BillDetailDTO> billDetailDTOS = billDetailService.totalByDate(convertToLocalDate(date),idShop);
-        return new ResponseEntity<>(billDetailDTOS,HttpStatus.OK);
+        List<BillDetailDTO> billDetailDTOS = billDetailService.totalByDate(convertToLocalDate(date), idShop);
+        return new ResponseEntity<>(billDetailDTOS, HttpStatus.OK);
     }
+
     @GetMapping("/totalWeek/{date1}/{date2}/{idShop}")
     ResponseEntity<List<BillDetailDTO>> totalByWeek(@PathVariable String date1,
                                                     @PathVariable String date2,
                                                     @PathVariable Long idShop) {
         List<BillDetailDTO> billDetailDTOS = billDetailService
-                .totalByWeek(convertToLocalDate(date1),convertToLocalDate(date2),idShop);
-        return new ResponseEntity<>(billDetailDTOS,HttpStatus.OK);
+                .totalByWeek(convertToLocalDate(date1), convertToLocalDate(date2), idShop);
+        return new ResponseEntity<>(billDetailDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/totalBill/{date1}/{date2}/{idShop}")
+    ResponseEntity<List<BillDetailDTO>> totalBill(@PathVariable String date1,
+                                                  @PathVariable String date2,
+                                                  @PathVariable Long idShop) {
+        List<BillDetailDTO> billDetailDTOS = billDetailService
+                .totalBill(convertToLocalDate(date1), convertToLocalDate(date2), idShop);
+        return new ResponseEntity<>(billDetailDTOS, HttpStatus.OK);
     }
 
     private LocalDate convertToLocalDate(String dateString) {
