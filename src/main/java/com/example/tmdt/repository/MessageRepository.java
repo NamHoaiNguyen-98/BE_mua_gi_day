@@ -3,11 +3,13 @@ package com.example.tmdt.repository;
 import com.example.tmdt.model.Message;
 import com.example.tmdt.model.User;
 import com.example.tmdt.security.model.Account;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
     @Query("SELECT m1 FROM Message m1 " +
