@@ -9,6 +9,7 @@ import com.example.tmdt.model.Notification;
 import com.example.tmdt.model.User;
 import com.example.tmdt.repository.CommentRepository;
 import com.example.tmdt.repository.NotificationRepository;
+import com.example.tmdt.repository.ProductRepository;
 import com.example.tmdt.repository.UserRepository;
 import com.example.tmdt.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class CommentService implements ICommentService {
     private CommentMapper commentMapper;
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private ProductRepository productRepository;
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
@@ -41,7 +44,7 @@ public class CommentService implements ICommentService {
             notification.setTitle("Thông báo shop");
             notification.setContent("Đã đánh giá");
             notification.setCreateAt(LocalDateTime.now());
-            notification.setShop(dto.getProduct().getShop());
+            notification.setShop(productRepository.findById(dto.getProduct().getId()).get().getShop());
             notification.setAccount(dto.getAccount());
             notification.setAvatar(user.getAvatar());
             notification.setProduct(productMapper.toEntity(dto.getProduct()));
