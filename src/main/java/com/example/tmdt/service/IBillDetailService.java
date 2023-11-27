@@ -18,6 +18,7 @@ public interface IBillDetailService extends BaseService<BillDetailDTO> {
     List<CartDetailDTO> showProductUserSelect(List<Long> idCartDetails);
     List<BillDetailDTO> totalByDate(LocalDate date,Long idShop);
     List<BillDetailDTO> totalByWeek(LocalDate date1, LocalDate date2,Long idShop);
+    List<BillDetailDTO> totalBill(LocalDate date1, LocalDate date2,Long idShop);
 
 
 }
