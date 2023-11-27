@@ -44,7 +44,7 @@ public class MessageService implements IMessageService {
 
     @Override
     public void createNewMessage(Long fromUserId, Long toUserId) {
-        List<Message> messages = messageRepository.findListAccountInChat(toUserId);
+        List<Message> messages = messageRepository.findListAccountInChat(fromUserId);
         boolean check = false;
         for (Message message : messages) {
             if (message.getToUser().getId().equals(toUserId)) {
