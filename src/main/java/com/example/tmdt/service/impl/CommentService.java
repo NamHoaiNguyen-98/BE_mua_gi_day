@@ -32,7 +32,8 @@ public class CommentService implements ICommentService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private NotificationRepository notificationRepository ;
+    private NotificationRepository notificationRepository;
+
     @Override
     public void save(CommentDTO dto) {
         Comment comment = commentMapper.toEntity(dto);
@@ -40,7 +41,7 @@ public class CommentService implements ICommentService {
         comment.setUser(user);
         if (comment.getId() == null) {
             comment.setCreateAt(LocalDateTime.now());
-            Notification notification = new Notification() ;
+            Notification notification = new Notification();
             notification.setTitle("Thông báo shop");
             notification.setContent("Đã đánh giá");
             notification.setCreateAt(LocalDateTime.now());
@@ -48,9 +49,9 @@ public class CommentService implements ICommentService {
             notification.setAccount(dto.getAccount());
             notification.setAvatar(user.getAvatar());
             notification.setProduct(productMapper.toEntity(dto.getProduct()));
-            notificationRepository.save(notification) ;
-        }else {
-            Notification notification = new Notification() ;
+            notificationRepository.save(notification);
+        } else {
+            Notification notification = new Notification();
             notification.setTitle("Thông báo user");
             notification.setContent("Đã phản hồi đánh giá");
             notification.setCreateAt(LocalDateTime.now());
@@ -58,7 +59,7 @@ public class CommentService implements ICommentService {
             notification.setAccount(dto.getAccount());
             notification.setProduct(productMapper.toEntity(dto.getProduct()));
             notification.setAvatar(dto.getProduct().getShop().getAvatar());
-            notificationRepository.save(notification) ;
+            notificationRepository.save(notification);
         }
         commentRepository.save(comment);
     }
@@ -66,7 +67,7 @@ public class CommentService implements ICommentService {
     @Override
     public void delete(Long id) {
         Optional<Comment> commentOptional = commentRepository.findById(id);
-        if (commentOptional.isPresent()){
+        if (commentOptional.isPresent()) {
             Comment comment = commentOptional.get();
             comment.setStatus("1");
             commentRepository.save(comment);
@@ -76,7 +77,7 @@ public class CommentService implements ICommentService {
     @Override
     public CommentDTO findOne(Long id) {
         Optional<Comment> commentOptional = commentRepository.findById(id);
-        if (commentOptional.isPresent()){
+        if (commentOptional.isPresent()) {
             Comment comment = commentOptional.get();
             return commentMapper.toDto(comment);
         }
@@ -92,7 +93,25 @@ public class CommentService implements ICommentService {
     @Override
     public List<CommentDTO> findByIdProduct(Long id) {
         List<Comment> comments = commentRepository.findAllByProduct_Id(id);
-        if (comments != null){
+        if (comments != null) {
+            return commentMapper.toDto(comments);
+        }
+        return null;
+    }
+
+    @Override
+    public CommentDTO findComment(Long idAccount, Long idProduct) {
+        Optional<Comment> commentOptional = commentRepository.findComment(idAccount, idProduct);
+        if (commentOptional.isPresent()) {
+            return commentMapper.toDto(commentOptional.get());
+        }
+        return null;
+    }
+
+    @Override
+    public List<CommentDTO> findCmtByAcc(Long id) {
+        List<Comment> comments = commentRepository.findAllByAccount_Id(id);
+        if (!comments.isEmpty()) {
             return commentMapper.toDto(comments);
         }
         return null;

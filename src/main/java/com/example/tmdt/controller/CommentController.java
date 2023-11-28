@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -63,5 +64,17 @@ public class CommentController {
     @GetMapping("/product/{id}")
     public ResponseEntity<?> showCommentByProductId(@PathVariable Long id) {
         return new ResponseEntity<>(commentService.findByIdProduct(id), HttpStatus.OK);
+    }
+    @PostMapping("/find")
+    public ResponseEntity<?> findCommentByIdPAndIdAcc(@RequestParam Long idAcc,@RequestParam Long idPrd){
+        CommentDTO commentDTO = commentService.findComment(idAcc, idAcc);
+        return new ResponseEntity<>(commentDTO, HttpStatus.OK);
+    }
+    @GetMapping("/find/{id}")
+    public ResponseEntity<?> findCmtByIdAcc(@PathVariable Long id){
+        List<CommentDTO> commentDTOs = commentService.findCmtByAcc(id);
+        if (!commentDTOs.isEmpty()) {
+            return new ResponseEntity<>(commentDTOs,HttpStatus.OK);
+        } return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
