@@ -50,7 +50,10 @@ public class BillController {
     }
     @PostMapping("/accept")
     public ResponseEntity<?> accept (@RequestBody List<BillDetail> billDetails) {
-        billService.accept(billDetails);
+       Integer integer = billService.accept(billDetails);
+       if(integer == 0 ) {
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+       }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PostMapping("/rejection")

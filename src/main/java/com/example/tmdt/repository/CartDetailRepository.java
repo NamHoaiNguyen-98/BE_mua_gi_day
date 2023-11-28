@@ -48,4 +48,11 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
     @Modifying
     @Query(value = "DELETE FROM cart_detail WHERE product_id = :idProduct", nativeQuery = true)
     void deleteCartDetailByProduct(@Param("idProduct") Long idProduct);
+
+    @Query(value = "SELECT * FROM cart_detail cd JOIN cart c ON cd.cart_id = c.id WHERE cd.product_id = :idProduct AND c.account_id = :idAccount order by cd.id DESC limit 1",nativeQuery = true)
+    Optional<CartDetail> findCartDetailByProduct(@Param("idProduct") Long idProduct,
+                                                 @Param("idAccount") Long idAccount);
+
+
+
  }

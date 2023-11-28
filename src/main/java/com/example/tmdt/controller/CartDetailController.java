@@ -36,5 +36,10 @@ public class CartDetailController {
         cartService.save(cartDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+    @GetMapping("/{idProduct}/{idAccount}")
+    ResponseEntity<?> findCartDetailByProduct(@PathVariable("idProduct") Long idProduct,
+                                              @PathVariable("idAccount") Long idAccount) {
+        return new ResponseEntity<>(cartDetailService.findCartDetailByProduct(idProduct, idAccount), HttpStatus.OK);
+    }
 
 }

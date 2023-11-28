@@ -69,7 +69,14 @@ public class BillService implements IBillService {
     }
 
     @Override
-    public void accept(List<BillDetail> billDetails) {
+    public Integer accept(List<BillDetail> billDetails) {
+        for (BillDetail id:
+                billDetails ) {
+            Product product = id.getProduct();
+            if(product.getQuantity() - id.getQuantity() < 0){
+                return 0;
+            }
+        }
         Bill dto = billRepository.findById(billDetails.get(0).getBill().getId()).get();
         dto.setStatus("Đang giao");
         billRepository.save(dto);
@@ -82,12 +89,14 @@ public class BillService implements IBillService {
         notification.setShop(billDetails.get(0).getProduct().getShop());
         notification.setAccount(dto.getAccount());
         notificationRepository.save(notification) ;
+
         for (BillDetail id:
              billDetails ) {
            Product product = id.getProduct();
            product.setQuantity((int) (product.getQuantity() - id.getQuantity()));
            productRepository.save(product);
         }
+        return 1 ;
     }
 
     @Override

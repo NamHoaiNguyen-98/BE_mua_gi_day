@@ -26,7 +26,7 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
             ";", nativeQuery = true)
     List<BillDetail> displayBillOfShop(@Param("idShop") Long idShop, @Param("status") String status);
 
-    @Query(value = "SELECT * FROM bill_detail bd JOIN bill on bill_id = bill.id WHERE account_id = :idAccount AND bill.status = :status", nativeQuery = true)
+    @Query(value = "SELECT * FROM bill_detail bd JOIN bill on bill_id = bill.id WHERE account_id = :idAccount AND bill.status = :status ORDER BY bd.id DESC", nativeQuery = true)
     List<BillDetail> showBillByAccountAndStatus(@Param("idAccount") Long idAccount,
                                                 @Param("status") String status);
 

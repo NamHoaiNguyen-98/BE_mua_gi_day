@@ -136,6 +136,16 @@ public class  CartDetailService implements ICartDetailService {
         return cartDetailMapper.toDto(dto);
     }
 
+    @Override
+    public CartDetailDTO findCartDetailByProduct(Long idProduct, Long idAccount) {
+        Optional<CartDetail> cartDetailOptional = cartDetailRepository.findCartDetailByProduct(idProduct, idAccount);
+        if (cartDetailOptional.isPresent()) {
+            CartDetail cartDetail = cartDetailOptional.get();
+            return cartDetailMapper.toDto(cartDetail);
+        }
+        return null;
+    }
+
 
     @Override
     public void deleteProductFromCart(Long idCartDetail) {
