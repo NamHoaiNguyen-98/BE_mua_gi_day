@@ -23,6 +23,12 @@ public class AccountServiceImpl implements UserDetailsService, IAccountService {
         return userOptional.map(this::toDTO).orElse(null);
     }
 
+    @Override
+    public Account findAccountByEmail(String email) {
+        return iUserRepository.findAccountByEmail(email);
+    }
+
+
     public Account findByUsername(String username) {
         return iUserRepository.findByUsername(username);
     }
@@ -49,4 +55,5 @@ public class AccountServiceImpl implements UserDetailsService, IAccountService {
     public Account toDTO(Account user) {
         return new Account(user.getId(), user.getUsername(), user.getRoles().toString());
     }
+
 }

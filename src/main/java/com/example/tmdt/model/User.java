@@ -1,10 +1,14 @@
 package com.example.tmdt.model;
-import com.example.tmdt.model.address.Address;
+
 import javax.persistence.*;
 
+import com.example.tmdt.model.address.Wards;
 import com.example.tmdt.security.model.Account;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.time.LocalDate;
+
 @Data
 @Entity
 @Table(name = "User")
@@ -17,10 +21,12 @@ public class User {
     private String name ;
     private String avatar ;
     private String gender ;
-    private Integer age ;
+    private LocalDate age ;
     private String phone ;
+    private String email ;
+    private String address;
     @ManyToOne
-    private Address address ;
+    private Wards wards;
     @ManyToOne
     private Discount discount ;
     @OneToOne

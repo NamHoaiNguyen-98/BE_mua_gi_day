@@ -1,22 +1,23 @@
 package com.example.tmdt.model;
-import com.example.tmdt.model.fkProduct.Shop;
 import com.example.tmdt.security.model.Account;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
+import java.time.LocalDateTime;
+
 @Data
 @Entity
-@Table(name = "Chat")
+@Table(name = "message")
 @EqualsAndHashCode(callSuper = false)
-public class Chat{
+public class Message {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @ManyToOne
+    private Account fromUser;
+    @ManyToOne
+    private Account toUser;
     private String content;
-    @ManyToOne
-    private Account account ;
-    @ManyToOne
-    private Shop shop ;
+    private LocalDateTime time;
+
 }

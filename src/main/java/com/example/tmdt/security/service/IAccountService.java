@@ -12,5 +12,5 @@ public interface IAccountService {
     void addAcc(Account account) ;
 
     Account findById(Long id);
-
+    Account findAccountByEmail(String email);
 }

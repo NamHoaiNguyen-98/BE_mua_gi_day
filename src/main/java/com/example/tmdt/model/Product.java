@@ -1,10 +1,8 @@
 package com.example.tmdt.model;
-
 import com.example.tmdt.model.fkProduct.*;
 import com.example.tmdt.security.model.Account;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.util.List;
@@ -26,15 +24,14 @@ public class Product {
     @Column(nullable = false)
     @Min(value = 1)
     private Double price;
-    @Min(value = 1)
+    @Min(value = 0)
     private Double promotion;
     @Column(columnDefinition = "integer default 0")
-    private Integer count;
-    @Column(columnDefinition = "integer default 0")
+    private Double count;
+    @Column(nullable = true)
     private Integer status;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Comment> comment;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<Comment> comment;
     @ManyToOne
     private Brand brand;
     @ManyToOne
